@@ -3,6 +3,14 @@ body{
 	padding: 0;
 	overflow-x: hidden;		
 	background-color: $secondColor;
+	color: $thirdColor;
+	height: 100%;
+	display: flex;
+	margin-bottom: 0;
+}
+
+html{
+	height: 100%;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Anton|Montserrat');
@@ -25,6 +33,7 @@ p{
 
 a{
 	font-family: $defaultFont;
+	color: $fourthColor;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -62,6 +71,10 @@ a{
 	}
 }
 
+p{
+	color: $thirdColor;
+}
+
 button{
 	font-family: $fontColor;
 	font-weight: bold;
@@ -77,5 +90,109 @@ button{
 	&:hover{
 		background-color: $secondColor;
 		transition: 0.3s;
+	}
+}
+
+.navbar {
+	background: $secondColor;
+	width: 200px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	align-items: flex-start;
+	padding: 0 12.5px;
+	
+
+	.nav-link {
+		color: $thirdColor;
+		font-size: 1rem;
+		transition: 0.3s;
+
+		&.current{
+			color: $fourthColor;
+		}
+
+		&:hover{
+			color: $fourthColor;
+		}
+	}
+}
+
+header {
+	height: 100px;
+	width: 100%;
+	background: $firstColor;
+	flex-direction: row-reverse;
+	display: flex;
+	padding: 0 25px;
+}
+
+.profile{
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+
+	.icon{
+		margin-left: 12.5px;
+
+		img{
+			width: 50px;
+			height: 50px;
+			border-radius: 100%;
+			background: $thirdColor;
+			position: relative;
+		}
+	}
+
+	p{
+		margin: 0;
+		padding: 0;
+	}
+
+}
+
+main{
+	background: $firstColor;
+	width: 100%;
+	height: 100%;
+	padding: 0 25px;
+}
+
+.layout-container{
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.block{
+	position: relative;
+	display: inline-flex;
+	flex-direction: column;
+	
+
+	.wrapper{
+		background: $secondColor;
+		border-radius: 7px;
+		overflow: hidden;
+		padding: 25px;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	}
+
+	table{
+		border-radius: 7px;
+		overflow: hidden;
+
+		td{
+			border-top: none;
+			color: $secondColor;
+			background: $thirdColor;
+			padding: 7.5px 15px;
+
+			&:nth-of-type(even){
+				background: $firstColor;
+				color: $thirdColor;
+			}
+		}
 	}
 }
