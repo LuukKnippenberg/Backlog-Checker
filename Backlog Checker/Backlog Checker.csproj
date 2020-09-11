@@ -10,8 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Chart.Mvc" Version="1.0.0.2" />
-    <PackageReference Include="FontAwesome.MVC" Version="1.0.0" />
+    <PackageReference Include="Chart.js" Version="2.9.3" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <!--<h1 class="display-4">Welcome</h1>-->
 </div>
 
 <div class="block">
@@ -32,7 +32,39 @@
             </table>
         </div>
         <div class="column graph">
-
+            <canvas id="myChart" width="auto" height="auto"></canvas>
+            <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Played', 'Owned'],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [30, 70],
+                            backgroundColor: [
+                                '#95DB39',
+                                '#D9D9D9'
+                            ],
+                            borderColor: [
+                                '#95DB39',
+                                '#D9D9D9'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        cutoutPercentage: 75,
+                         legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                fontColor: '#D9D9D9'
+                            }
+                        }
+                    }
+                });
+            </script>
         </div>
+        
     </div>
 </div>
