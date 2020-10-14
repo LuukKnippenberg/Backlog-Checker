@@ -20,16 +20,16 @@
                         <i class="fas fa-chart-line"></i><a class="nav-link current" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <i class="fas fa-play"></i><a class="nav-link" asp-area="" asp-controller="MyGames" asp-action="Index">My Games</a>
+                        <i class="fas fa-play"></i><a class="nav-link" asp-area="" asp-controller="Games" asp-action="Index">My Games</a>
                     </li>
                     <li class="nav-item">
-                        <i class="fas fa-compress-alt"></i><a class="nav-link" asp-area="" asp-controller="Compare" asp-action="Index">Compare</a>
+                        <i class="fas fa-compress-alt"></i><a class="nav-link" asp-area="" asp-controller="Games" asp-action="Compare">Compare</a>
                     </li>
                     <li class="nav-item">
                         <i class="fas fa-dice-six"></i><a class="nav-link" asp-area="" asp-controller="Roulette" asp-action="Index">Backlog Roulette</a>
                     </li>
                     <li class="nav-item">
-                        <i class="far fa-id-card"></i><a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
+                        <i class="far fa-id-card"></i><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Profile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <i class="fas fa-comment-dots"></i><a class="nav-link" asp-area="" asp-controller="Feedback" asp-action="Index">Feedback</a>
@@ -44,11 +44,13 @@
         <!--header-->
         <header>
             <div class="profile">
-                <div class="icon">
-                    <img />
-                </div>
-                <p>Luuk Knippenberg</p>
-            </div>
+                <a asp-area="" asp-controller="Account" asp-action="Profile">
+                    <div class="icon">
+                        <img />
+                    </div>
+                </a>
+                <a asp-area="" asp-controller="Account" asp-action="Profile"><p>Luuk Knippenberg</p></a>
+</div>
         </header>
         <!--/header-->
         <!--Main-->

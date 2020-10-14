@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Data.SqlClient;
 
 namespace Backlog_Checker
 {
@@ -24,6 +25,7 @@ namespace Backlog_Checker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

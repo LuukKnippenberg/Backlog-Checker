@@ -11,6 +11,14 @@
 
   <ItemGroup>
     <PackageReference Include="Chart.js" Version="2.9.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAcessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\LogicLayer\LogicLayer.csproj" />
+    <ProjectReference Include="..\ModelsDTO\ModelsDTO.csproj" />
   </ItemGroup>
 
 </Project>
