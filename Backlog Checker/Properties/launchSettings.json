@@ -1,4 +1,7 @@
 ﻿{
+  "ConnectionStrings": {
+    "BacklogCheckerDB": "Server=(localdb)\\MSSQLLocalDB;Database=BacklogCheckerDB;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,

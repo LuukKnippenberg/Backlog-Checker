@@ -3,43 +3,18 @@ using System.Data.Common;
 using System.Runtime;
 using System.Data.SqlClient;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace DataAcessLayer
 {
     public class SqlConnection
     {
-
-        //Return a DataReader object that inherits from IDataReader
-        public IDataReader GetData(IDbConnection con, string commandText) 
-
+        private static MySqlConnection CreateConnection()
         {
-            //Create a Command object that inherits from IDbCommand
-            IDbCommand cmd = con.CreateCommand();
-
-            //Set the CommandText to the value passed in
-            cmd.CommandText = commandText;
-
-            //Open the connection
-            try
-
-            {
-
-                con.Open();
-
-            }
-
-            catch
-
-            {
-                //Connection is invalid or already open
-
-            }
-
-            //Return the results from ExecuteReader()
-            return cmd.ExecuteReader();
-
+            MySqlConnection cnn;
+            string connetionString = $"Server=vserver318.axc.eu;user=luukkpj318_backlogchecker;password=Fontys123!;Database=luukkpj318_backlogchecker";
+            cnn = new MySqlConnection(connetionString);
+            return cnn;
         }
     }
-
-
 }

@@ -26,6 +26,8 @@ namespace Backlog_Checker
         {
             services.AddControllersWithViews();
             //services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+
+            //services.AddDbContext<MvcMovieContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BacklogCheckerDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
