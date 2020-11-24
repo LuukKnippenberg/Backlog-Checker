@@ -47,6 +47,40 @@ namespace DataAcessLayer
             return readerResults;
         }
 
+        public List<List<string>> ExecuteSearchQueryWithListReturn(string query)
+        {
+            List<List<string>> results = new List<List<string>>();
+            MySqlConnection cnn = CreateConnection();
+            MySqlCommand cmd = GenerateCommand(query, cnn);
+            cnn.Open();
+
+            try
+            {
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) //1 x per row
+                {                              
+                    List<string> tempList = new List<string>();
+                    
+                    for (int i = 0; i < (reader.FieldCount - 1); i++) // 1 x per column
+                    {
+                        tempList.Add(reader[i].ToString());
+                    }
+                    
+                    results.Add(tempList);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                cnn.Close();
+            }
+
+
+            cnn.Close();
+
+            return results;
+        }
+
         public List<string> ExecuteSearchQueryParameters(string query, List<string[]> parameters)
         {
             List<string> readerResults = new List<string>();
@@ -135,12 +169,13 @@ namespace DataAcessLayer
             return readerResults;
         }
 
+        // Seems nonfunctional
         public List<string[]> ExecuteSearchQueryWithArrayReturn(string query, List<string[]> parameters)
         {
             List<string[]> values = new List<string[]>();
             MySqlConnection cnn = CreateConnection();
             MySqlCommand cmd = GenerateCommand(query, cnn);
-            //cmd = AddParameters(cmd, parameters);
+            cmd = AddParameters(cmd, parameters);
             cnn.Open();
             MySqlDataReader reader = cmd.ExecuteReader();
             values.Clear();
@@ -159,7 +194,6 @@ namespace DataAcessLayer
             catch (Exception e)
             {
                 string eString = e.ToString();
-                Console.WriteLine(e.Message);
             }
             cnn.Close();
             return values;

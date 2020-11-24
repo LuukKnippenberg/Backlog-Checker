@@ -14,23 +14,18 @@ namespace DataAccessLayer
         {
             List<GamesModel> getGames = new List<GamesModel>();
 
-            List<string[]> param = new List<string[]>()
-            {
-                new string[] {"@id", id.ToString() }
-            };
-            List<string> result = sqlConnection.ExecuteSearchQuery("SELECT * FROM games WHERE id = 1");
-            //List<string[]> result = sqlConnection.ExecuteSearchQueryWithArrayReturn("SELECT * FROM games", param);
-            //List<string[]> result = sqlConnection.ExecuteSearchQueryWithArrayReturn("SELECT * FROM games", param);
-            /*
-            foreach (string[] row in result)
-            {
-                GamesModel getGamesTemp = new GamesModel();
-                getGamesTemp.id = Convert.ToInt32(row[0]);
-                getGamesTemp.title = row[1].ToString();
+            List<List<string>> result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games");
 
-                getGames.Add(getGamesTemp);
+            foreach( List<string> row in result)
+            {
+                GamesModel gamesModelTest = new GamesModel();
+                gamesModelTest.id = Convert.ToInt32(row[0]);
+                gamesModelTest.title = row[1];
+                gamesModelTest.description = row[2];
+                gamesModelTest.headerUrl = row[3];
+
+                getGames.Add(gamesModelTest);
             }
-            */
 
             return getGames;
         }

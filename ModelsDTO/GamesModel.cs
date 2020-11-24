@@ -8,5 +8,7 @@ namespace ModelsDTO
     {
         public int id { get; set; }
         public string title { get; set; }
+        public string description { get; set; }
+        public string headerUrl { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Backlog_Checker.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetGamesView(MyGamesViewModel myGameViewModel)
+        public IActionResult GetGames(MyGamesViewModel myGameViewModel)
         {
             GamesModel gamesModel = new GamesModel();
             gamesModel.id = myGameViewModel.id;
@@ -35,7 +35,7 @@ namespace Backlog_Checker.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetGamesView()
+        public IActionResult GetGames()
         {
             GamesManager gamesManager = new GamesManager();
 
