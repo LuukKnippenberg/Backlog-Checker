@@ -7,15 +7,17 @@ test
 
 <div class="items">
     <ul>
+        <li><span class="letter-indicator">A...</span></li>
         @{
             foreach (ModelsDTO.GamesModel item in Model)
             {
                 <li>@item.id</li>
                 <li>@item.title</li>
                 <li>@item.description</li>
-                <li><img src="@item.headerUrl"/></li>
+                <li><img src="@item.headerUrl" /></li>
 
             }
         }
+        <li><span class="letter-indicator">B...</span></li>
     </ul>
 </div>
