@@ -58,7 +58,7 @@ namespace DataAcessLayer
             {
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) //1 x per row
-                {                              
+                {
                     List<string> tempList = new List<string>();
                     
                     for (int i = 0; i < (reader.FieldCount - 1); i++) // 1 x per column

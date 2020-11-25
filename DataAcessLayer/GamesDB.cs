@@ -14,7 +14,7 @@ namespace DataAccessLayer
         {
             List<GamesModel> getGames = new List<GamesModel>();
 
-            List<List<string>> result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games");
+            List<List<string>> result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games ORDER BY title");
 
             foreach( List<string> row in result)
             {

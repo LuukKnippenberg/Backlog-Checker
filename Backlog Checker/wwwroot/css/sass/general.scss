@@ -2,9 +2,9 @@ body{
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden;		
-	background-color: $secondColor;
+	background-color: $firstColor;
 	color: $thirdColor;
-	height: 100%;
+	min-height: 100%;
 	display: flex;
 	margin-bottom: 0;
 }
@@ -67,7 +67,8 @@ a{
 
 	&:hover{
 		text-decoration: none;
-		color: $firstColor;
+		opacity: 0.6;
+		color: $fourthColor;
 	}
 }
 
@@ -93,10 +94,27 @@ button{
 	}
 }
 
+.button{
+	font-family: $defaultFont;
+	color: $secondColor;
+	padding: 5px 20px;
+	width: 100%;
+	border: none;
+	background: $fourthColor;
+	font-size: 16px;
+	width: auto;
+	border-radius: 7px;
+
+	&:hover{
+		opacity: 0.8;
+		transition: 0.3s;
+		transform: scale(1.05);
+	}
+}
+
 .navbar {
 	background: $secondColor;
 	width: 200px;
-	height: 100%;
 	margin: 0;
 	padding: 0;
 	align-items: flex-start;
@@ -228,5 +246,92 @@ main{
 
 	.column.graph{
 		margin-right: -25px;
+	}
+}
+
+.get-games{
+	display: flex;
+	flex-direction: row;
+
+	.block{
+		max-width: 50%;
+		width: 50%;
+		background-color: $secondColor;
+		padding: 25px;
+		border-radius: 7px;
+		box-shadow: $boxShadow;
+
+		&:first-of-type{
+			margin-right: 25px;
+		}
+	}
+}
+
+#games-list{
+	.row{
+		margin: 10px 0;
+		border-radius: 7px;
+		overflow: hidden;
+
+		.col{
+			display: flex;
+			align-items: center;
+			background: $firstColor;
+			padding: 5px 15px;
+
+			&.title{
+				background: $thirdColor;
+				color: $secondColor;
+			}
+
+			&:last-of-type{
+				flex-direction: row-reverse;
+				padding-right: 15px;
+			}
+		}
+	}
+
+	label{
+		margin: 0;
+	}
+}
+
+.filter-options{
+	display: flex;
+	margin: 0 0 15px 0;
+	
+	.option{
+		margin-right: 15px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+.featured-game{
+	border-radius: 7px;
+	overflow: hidden;
+
+	.featured-image{
+		
+		img{
+			width: 100%;
+		}
+	}
+
+	.content{
+		background: $firstColor;
+		padding: 25px;
+	}
+
+	.title{
+		font-size: 18px;
+		border-bottom: 1px solid $fourthColor;
+		display: inline-flex;
+	}
+
+	p{
+		font-size: 14px;
+		line-height: 1.5rem;
 	}
 }

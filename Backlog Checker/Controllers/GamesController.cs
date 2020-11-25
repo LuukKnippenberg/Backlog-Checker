@@ -11,9 +11,29 @@ namespace Backlog_Checker.Controllers
 {
     public class GamesController : Controller
     {
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult Index(MyGamesViewModel myGameViewModel)
         {
+            GamesModel gamesModel = new GamesModel();
+            gamesModel.id = myGameViewModel.id;
+            gamesModel.title = myGameViewModel.title;
+
+            GamesManager gamesManager = new GamesManager();
+            gamesManager.GetGames(gamesModel);
+
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Index( string gameId )
+        {
+            Console.WriteLine(gameId);
+
+            GamesManager gamesManager = new GamesManager();
+
+            List<GamesModel> gamesModelsList = gamesManager.GetGames(new GamesModel());
+
+            return View(gamesModelsList);
         }
 
         public IActionResult Compare()
@@ -39,7 +59,6 @@ namespace Backlog_Checker.Controllers
         {
             GamesManager gamesManager = new GamesManager();
 
-            //List<GamesModel> gamesModelsList = gamesManager.GetSingleGame(0);
             List<GamesModel> gamesModelsList = gamesManager.GetGames(new GamesModel());
 
             return View(gamesModelsList);

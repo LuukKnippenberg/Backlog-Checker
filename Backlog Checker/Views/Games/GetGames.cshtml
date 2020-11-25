@@ -2,22 +2,55 @@
 @{
     ViewData["Title"] = "My Games";
 }
+<div class="get-games">
 
-test
+    <div class="block">
+        <div class="filter-options">
+            <a href="#" class="option button">Filter</a>
+            <a href="#" class="option button">Sort</a>
+        </div>
+        <div id="games-list">
+            <div class="items">
+                <!--<span class="letter-indicator">A...</span>-->
 
-<div class="items">
-    <ul>
-        <li><span class="letter-indicator">A...</span></li>
-        @{
-            foreach (ModelsDTO.GamesModel item in Model)
-            {
-                <li>@item.id</li>
-                <li>@item.title</li>
-                <li>@item.description</li>
-                <li><img src="@item.headerUrl" /></li>
+                @{
+                    foreach (ModelsDTO.GamesModel item in Model)
+                    {
+                        <div class="row">
+                            <div class="col title">@item.title</div>
+                            <div class="col">
+                                <label class="interestedLabel"><input type="checkbox">Interested</label>
+                            </div>
+                            <div class="col"><a href="#"><i class="fas fa-chevron-right"></i></a></div>
+                        </div>
+                    }
+                }
 
-            }
-        }
-        <li><span class="letter-indicator">B...</span></li>
-    </ul>
-</div>
+                <!--<span class="letter-indicator">B...</span>-->
+            </div>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="featured-game">
+                @{
+                    //@Model[0].id;
+                    <div class="featured-image">
+                        <img src="@Model[0].headerUrl" />
+                    </div>
+                    <div class="content">
+                        <h1 class="title">About @Model[0].title</h1>
+                        <p>
+                            @Model[0].description;
+                        </p>
+                        <h1 class="title">Genres</h1>
+                        <p>Action, Adventure and Indie</p>
+                        <h1 class="title">Categories</h1>
+                        <p>Single-Player, Multi-Player, PvP, Online PvP, Online Co-op</p>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
