@@ -24,37 +24,13 @@
                             <div class="col">
                                 <label class="interestedLabel"><input type="checkbox">Interested</label>
                             </div>
-                            <div class="col"><a href="?gameId=@item.id"><i class="fas fa-chevron-right"></i></a></div>
+                            <div class="col"><a href="Games/Game/?gameId=@item.id"><i class="fas fa-chevron-right"></i></a></div>
                         </div>
                     }
                 }
 
                 <!--<span class="letter-indicator">B...</span>-->
             </div>
-        </div>
-    </div>
-
-    <div class="block">
-        <div class="featured-game">
-            @{
-                int gameId = 5;
-
-                //@Model[0].id;
-                <div class="featured-image">
-                    <img src="@Model[gameId].headerUrl" />
-                </div>
-                <div class="content">
-                    <h1 class="title">About @Model[gameId].title</h1>
-                    <p>
-                        @Model[gameId].description;
-                    </p>
-                    <h1 class="title">Genres</h1>
-                    <p>Action, Adventure and Indie</p>
-                    <h1 class="title">Categories</h1>
-                    <p>Single-Player, Multi-Player, PvP, Online PvP, Online Co-op</p>
-                </div>
-
-            }
         </div>
     </div>
 

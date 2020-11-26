@@ -36,6 +36,18 @@ namespace Backlog_Checker.Controllers
             return View(gamesModelsList);
         }
 
+        [HttpGet]
+        public IActionResult Game(int gameId)
+        {
+            Console.WriteLine(gameId);
+
+            GamesManager gamesManager = new GamesManager();
+
+            GamesModel gamesModel = gamesManager.GetSingleGame(gameId);
+
+            return View(gamesModel);
+        }
+
         public IActionResult Compare()
         {
             return View();

@@ -12,12 +12,12 @@ namespace LogicLayer
 
         public List<GamesModel> GetGames(GamesModel gamesModel)
         {
-            return gamesDB.GetGames(gamesModel.id);
+            return gamesDB.GetAllGames();
         }
 
-        public List<GamesModel> GetSingleGame(int id)
+        public GamesModel GetSingleGame(int id)
         {
-            return gamesDB.GetGames(id);
+            return gamesDB.GetSingleGame(id);
         }
     }
 }

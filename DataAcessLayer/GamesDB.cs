@@ -10,7 +10,7 @@ namespace DataAccessLayer
     {
         private SqlConnection sqlConnection = new SqlConnection();
 
-        public List<GamesModel> GetGames(int id)
+        public List<GamesModel> GetAllGames()
         {
             List<GamesModel> getGames = new List<GamesModel>();
 
@@ -28,6 +28,22 @@ namespace DataAccessLayer
             }
 
             return getGames;
+        }
+
+        public GamesModel GetSingleGame(int id)
+        {
+            GamesModel gamesModel = new GamesModel();
+
+            var query = "select * FROM games WHERE id = " + id;
+
+            List<string> resultStringList = sqlConnection.ExecuteSearchQuery(query);
+
+            gamesModel.id = Convert.ToInt32(resultStringList[0]);
+            gamesModel.title = resultStringList[1];
+            gamesModel.description = resultStringList[2];
+            gamesModel.headerUrl = resultStringList[3];
+
+            return gamesModel;
         }
 
     }
