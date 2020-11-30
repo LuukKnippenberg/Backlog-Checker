@@ -1,7 +1,38 @@
-﻿
+﻿@model List<ModelsDTO.GamesModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My Games";
 }
 
-<h1>Index</h1>
+<h1>My Games</h1>
 
+<div class="get-games">
+
+    <div class="block">
+        <div class="filter-options">
+            <a href="#" class="option button">Filter</a>
+            <a href="#" class="option button">Sort</a>
+            <a class="option button nav-link" asp-area="" asp-controller="Games" asp-action="AddGame">Add</a>
+        </div>
+        <div id="games-list">
+            <div class="items">
+                <!--<span class="letter-indicator">A...</span>-->
+
+                @{
+                    foreach (ModelsDTO.GamesModel item in Model)
+                    {
+                        <div class="row" gameId="@item.id">
+                            <div class="col title">@item.title</div>
+                            <div class="col">
+                                <label class="interestedLabel"><input type="checkbox">Interested</label>
+                            </div>
+                            <div class="col"><a href="Games/Game/?gameId=@item.id"><i class="fas fa-chevron-right"></i></a></div>
+                        </div>
+                    }
+                }
+
+                <!--<span class="letter-indicator">B...</span>-->
+            </div>
+        </div>
+    </div>
+
+</div>

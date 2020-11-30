@@ -1,0 +1,42 @@
+﻿@model Backlog_Checker.Models.Games.MyGamesViewModel
+
+@{
+    ViewData["Title"] = "AddGame";
+}
+
+<h1>AddGame</h1>
+
+<div class="detail">
+    <div class="block">
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="AddGame">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="title" class="control-label"></label>
+                        <input asp-for="title" class="form-control" />
+                        <span asp-validation-for="title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="HeaderUrl" class="control-label"></label>
+                        <input asp-for="HeaderUrl" class="form-control" />
+                        <span asp-validation-for="HeaderUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add Game" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+    </div>
+</div>

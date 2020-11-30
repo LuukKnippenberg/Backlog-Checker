@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backlog Checker", "Backlog Checker\Backlog Checker.csproj", "{C86E6CBE-4BE8-4C49-9EAE-48E94B82223D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcessLayer\DataAccessLayer.csproj", "{D9AE29D5-0E91-4681-986E-B153B7C1E079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAcessLayer\DataAccessLayer.csproj", "{D9AE29D5-0E91-4681-986E-B153B7C1E079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayer", "LogicLayer\LogicLayer.csproj", "{D5D694E4-CA05-4D03-B8F9-4670D0A66645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayer", "LogicLayer\LogicLayer.csproj", "{D5D694E4-CA05-4D03-B8F9-4670D0A66645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsDTO", "ModelsDTO\ModelsDTO.csproj", "{98808EDE-5B2C-4884-A1B7-62A0513020A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsDTO", "ModelsDTO\ModelsDTO.csproj", "{98808EDE-5B2C-4884-A1B7-62A0513020A7}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BacklogCheckerDB", "BacklogCheckerDB\BacklogCheckerDB.sqlproj", "{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}"
 EndProject
