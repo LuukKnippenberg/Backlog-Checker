@@ -273,13 +273,17 @@ main{
 	}
 }
 
+.flex-col{
+	display: flex;
+	flex-direction: column;
+}
+
 .detail{
 	display: flex;
 	flex-direction: row;
 
 	.block{
 		max-width: 100%;
-		width: 100%;
 		background-color: $secondColor;
 		padding: 25px;
 		border-radius: 7px;
@@ -294,6 +298,10 @@ main{
 			max-height: 350px;
 			overflow: hidden;
 		}
+	}
+
+	.form-control{
+		min-width: 400px;
 	}
 }
 
