@@ -19,5 +19,10 @@ namespace LogicLayer
         {
             return gamesDB.GetSingleGame(id);
         }
+
+        public void AddGame(string title, string description, string headerUrl)
+        {
+            gamesDB.AddGame(title, description, headerUrl);
+        }
     }
 }

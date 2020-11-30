@@ -18,6 +18,7 @@ namespace Backlog_Checker.Models.Account
         [DataType(DataType.Password)]
         [Display(Name = "Repeat password")]
         [Compare("Password", ErrorMessage = "Passwords don't match!")]
+        public string PasswordRepeat { get; set; }
 
         [Required]
         public string Email { get; set; }

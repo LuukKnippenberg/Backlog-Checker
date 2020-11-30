@@ -8,7 +8,6 @@ namespace Backlog_Checker.Models.Games
 {
     public class MyGamesViewModel
     {
-        [Required]
         public int id { get; set; }
 
         [Required]

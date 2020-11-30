@@ -39,8 +39,6 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Game(int gameId)
         {
-            Console.WriteLine(gameId);
-
             GamesManager gamesManager = new GamesManager();
 
             GamesModel gamesModel = gamesManager.GetSingleGame(gameId);
@@ -53,27 +51,21 @@ namespace Backlog_Checker.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult GetGames(MyGamesViewModel myGameViewModel)
+        [HttpGet]
+        public IActionResult AddGame()
         {
-            GamesModel gamesModel = new GamesModel();
-            gamesModel.id = myGameViewModel.id;
-            gamesModel.title = myGameViewModel.title;
-
-            GamesManager gamesManager = new GamesManager();
-            gamesManager.GetGames( gamesModel );
 
             return View();
         }
 
-        [HttpGet]
-        public IActionResult GetGames()
+        [HttpPost]
+        public IActionResult AddGame(string title, string description, string headerUrl)
         {
             GamesManager gamesManager = new GamesManager();
 
-            List<GamesModel> gamesModelsList = gamesManager.GetGames(new GamesModel());
+            gamesManager.AddGame(title, description, headerUrl);
 
-            return View(gamesModelsList);
+            return View();
         }
     }
 }

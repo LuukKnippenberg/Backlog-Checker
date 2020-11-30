@@ -61,7 +61,7 @@ namespace DataAcessLayer
                 {
                     List<string> tempList = new List<string>();
                     
-                    for (int i = 0; i < (reader.FieldCount - 1); i++) // 1 x per column
+                    for (int i = 0; i < reader.FieldCount; i++) // 1 x per column
                     {
                         tempList.Add(reader[i].ToString());
                     }

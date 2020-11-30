@@ -273,6 +273,31 @@ main{
 	}
 }
 
+.detail{
+	display: flex;
+	flex-direction: row;
+
+	.block{
+		max-width: 100%;
+		width: 100%;
+		background-color: $secondColor;
+		padding: 25px;
+		border-radius: 7px;
+		box-shadow: $boxShadow;
+
+		&:first-of-type{
+			margin-right: 25px;
+		}
+
+		.featured-image{
+			width: 100%;
+			max-height: 350px;
+			overflow: hidden;
+		}
+	}
+}
+
+
 #games-list{
 	.row{
 		margin: 10px 0;

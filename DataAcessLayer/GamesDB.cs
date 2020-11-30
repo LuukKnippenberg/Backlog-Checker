@@ -43,7 +43,18 @@ namespace DataAccessLayer
             gamesModel.description = resultStringList[2];
             gamesModel.headerUrl = resultStringList[3];
 
+            //AddGame("test", "test", "linkiewinkie");
+
             return gamesModel;
+        }
+
+        public void AddGame(string title, string description, string headerUrl)
+        {
+            var query = $"INSERT INTO games(title, description, headerUrl ) VALUES ('{title}', '{description}', '{headerUrl}')";
+
+            sqlConnection.ExecuteNonSearchQuery(query);
+
+            return;
         }
 
     }
