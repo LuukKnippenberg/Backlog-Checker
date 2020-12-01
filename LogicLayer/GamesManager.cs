@@ -29,5 +29,10 @@ namespace LogicLayer
         {
             gamesDB.DeleteGame(gameId);
         }
+
+        public void EditGame(int gameId)
+        {
+            gamesDB.EditGame(gameId);
+        }
     }
 }

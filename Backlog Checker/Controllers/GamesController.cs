@@ -11,6 +11,16 @@ namespace Backlog_Checker.Controllers
 {
     public class GamesController : Controller
     {
+        [HttpGet]
+        public IActionResult Index( string gameId )
+        {
+            GamesManager gamesManager = new GamesManager();
+
+            List<GamesModel> gamesModelsList = gamesManager.GetGames(new GamesModel());
+
+            return View(gamesModelsList);
+        }
+
         [HttpPost]
         public IActionResult Index(MyGamesViewModel myGameViewModel)
         {
@@ -22,18 +32,6 @@ namespace Backlog_Checker.Controllers
             gamesManager.GetGames(gamesModel);
 
             return View();
-        }
-
-        [HttpGet]
-        public IActionResult Index( string gameId )
-        {
-            Console.WriteLine(gameId);
-
-            GamesManager gamesManager = new GamesManager();
-
-            List<GamesModel> gamesModelsList = gamesManager.GetGames(new GamesModel());
-
-            return View(gamesModelsList);
         }
 
         [HttpGet]
@@ -61,7 +59,6 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult AddGame()
         {
-
             return View();
         }
 
@@ -73,6 +70,28 @@ namespace Backlog_Checker.Controllers
             gamesManager.AddGame(title, description, headerUrl);
 
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int gameId)
+        {
+            Console.WriteLine($"gameId: {gameId}");
+
+            GamesManager gamesManager = new GamesManager();
+
+            GamesModel gamesModel = gamesManager.GetSingleGame(gameId);
+
+            return View(gamesModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string title, string description, string headerUrl)
+        {
+            GamesManager gamesManager = new GamesManager();
+
+            gamesManager.EditGame(id);
+
+            return RedirectToAction("Game", new { gameId = id });
         }
     }
 }

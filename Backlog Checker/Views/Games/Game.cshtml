@@ -27,7 +27,10 @@
                         <h1 class="title">Categories</h1>
                         <p>Single-Player, Multi-Player, PvP, Online PvP, Online Co-op</p>
                         <div class="return">
-                            <a href="/Games"><i class="fas fa-chevron-left"></i> Back to list </a>
+                            <a asp-action="Index" asp-controller="Games"><i class="fas fa-chevron-left"></i> Back to list </a>
+                        </div>
+                        <div class="edit">
+                            <a asp-action="Edit" asp-controller="Games" asp-route-gameId="@Model.id"><i class="fas fa-edit"></i> edit</a>
                         </div>
                     </div>
                 </div>

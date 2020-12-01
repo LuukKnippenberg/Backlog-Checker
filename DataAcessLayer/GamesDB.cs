@@ -66,5 +66,14 @@ namespace DataAccessLayer
             return;
         }
 
+        public void EditGame(int gameId)
+        {
+            var query = ($"SELECT * FROM games where id = {gameId}");
+
+            sqlConnection.ExecuteNonSearchQuery(query);
+
+            return;
+        }
+
     }
 }
