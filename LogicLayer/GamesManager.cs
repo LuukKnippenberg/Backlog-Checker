@@ -24,5 +24,10 @@ namespace LogicLayer
         {
             gamesDB.AddGame(title, description, headerUrl);
         }
+
+        public void DeleteGame(int gameId) 
+        {
+            gamesDB.DeleteGame(gameId);
+        }
     }
 }

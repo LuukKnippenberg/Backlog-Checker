@@ -57,5 +57,14 @@ namespace DataAccessLayer
             return;
         }
 
+        public void DeleteGame(int gameId)
+        {
+            var query = $"DELETE FROM games where id = {gameId}";
+
+            sqlConnection.ExecuteNonSearchQuery(query);
+
+            return;
+        }
+
     }
 }

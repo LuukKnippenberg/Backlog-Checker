@@ -46,6 +46,13 @@ namespace Backlog_Checker.Controllers
             return View(gamesModel);
         }
 
+        public void DeleteGame(int gameId)
+        {
+            GamesManager gamesManager = new GamesManager();
+
+            gamesManager.DeleteGame(gameId);
+        }
+
         public IActionResult Compare()
         {
             return View();
