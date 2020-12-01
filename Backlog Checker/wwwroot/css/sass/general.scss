@@ -257,6 +257,14 @@ label{
 	}
 }
 
+.options{
+	display: flex;
+	
+	.option:first-of-type{
+		margin-right: 15px;
+	}
+}
+
 header {
 	height: 100px;
 	width: 100%;
