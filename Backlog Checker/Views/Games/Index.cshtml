@@ -18,10 +18,9 @@
                 <!--<span class="letter-indicator">A...</span>-->
 
                 @{
-                    int gameIdToDelete = 0;
-
                     foreach (ModelsDTO.GamesModel item in Model)
                     {
+
                         <div class="row" gameId="@item.id">
                             <div class="col title">@item.title</div>
                             <div class="col">
@@ -30,7 +29,7 @@
 
                             <div class="col">
                                 <a asp-controller="Games" asp-action="Game" asp-route-gameId="@item.id"><i class="fas fa-chevron-right"></i></a>
-                                <a onclick="OpenPopup(); AddGameToDeleteId(@item.id);" href="#"><i class="fas fa-times danger"></i></a>
+                                <a onclick="AddGameToDelete(@item.id, '@item.title'); OpenPopup(); " href="#"><i class="fas fa-times danger"></i></a>
                             </div>
                         </div>
                     }
@@ -47,7 +46,7 @@
 <div class="popup" onclick="">
     <div class="overlay" onclick="ClosePopup()"></div>
     <div class="content">
-        <p>Are you sure you want to delete?</p>
+        <p>Are you sure you want to delete <span id="game-to-delete"></span>?</p>
         <div class="options">
             <a href="#" onclick="ClosePopup()" class="option button ">No</a>
             <a href="#" onclick="DeleteGame( GetGameToDeleteId() );" class="option button danger">Yes</a>

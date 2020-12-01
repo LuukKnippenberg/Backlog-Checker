@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 var gameToDeleteId;
+var gameToDeleteTitle;
 
 function Test()
 {
@@ -16,6 +17,7 @@ function ClosePopup(){
 
 function OpenPopup()
 {
+    $('#game-to-delete').html(gameToDeleteTitle);
     $('.popup').addClass('show');
 }
 
@@ -32,9 +34,10 @@ function DeleteGame(id)
 
 }
 
-function AddGameToDeleteId(id)
+function AddGameToDelete(id, title)
 {
     gameToDeleteId = id;
+    gameToDeleteTitle = title;
 }
 
 function GetGameToDeleteId()
@@ -44,7 +47,5 @@ function GetGameToDeleteId()
 
 $( document ).ready(function() 
 {
-    
-
 
 });
