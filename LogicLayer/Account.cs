@@ -16,7 +16,7 @@ namespace LogicLayer
         public string HeaderUrl { private set; get; }
         public string Rights { private set; get; }
 
-        public Account(AccountModel accountModel)
+        public Account(AccountModelDTO accountModel)
         {
             Id = accountModel.Id;
             Username = accountModel.Username;

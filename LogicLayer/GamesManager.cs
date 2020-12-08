@@ -28,6 +28,12 @@ namespace LogicLayer
             return games;
         }
 
+        public List<Game> GetGamesForUserById(int id)
+        {
+            List<Game> gamesFromUser = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(id));
+            return gamesFromUser;
+        }
+
         public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter)
         {
             
@@ -55,10 +61,16 @@ namespace LogicLayer
             gamesDB.EditGame(gameId);
         }
 
-        private List<Game> ConvertModelDTOIntoGenericGameList(GamesModelDTO gamesModelDTO)
+        private List<Game> ConvertModelDTOIntoGenericGameList(List<GamesModelDTO> gamesModelDTO)
         {
+            List<Game> gamesTemp = new List<Game>();
 
-            return new List<Game>();
+            foreach (GamesModelDTO gamesModel in gamesModelDTO)
+            {
+                var game = new Game(gamesModel);
+                gamesTemp.Add(game);
+            }
+            return gamesTemp;
         }
     }
 }

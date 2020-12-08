@@ -17,6 +17,19 @@ namespace DataAccessLayer
             return ConvertQueryResultsIntoRows(result);
         }
 
+        public List<GamesModelDTO> GetGamesForUserById(int id)
+        {
+            var gameIds = sqlConnection.ExecuteSearchQueryWithListReturn($"SELECT * FROM users_games where user_id = {id}");
+
+            List<List<string>> result = new List<List<string>>(); 
+            foreach(var item in gameIds)
+            {
+                int gameId = Convert.ToInt32(item[1]);
+                result.Add(sqlConnection.ExecuteSearchQuery($"SELECT * from games WHERE id = {gameId}"));
+            }
+            return ConvertQueryResultsIntoRows(result);
+        }
+
         public GamesModelDTO GetSingleGame(int id)
         {
             GamesModelDTO gamesModel = new GamesModelDTO();

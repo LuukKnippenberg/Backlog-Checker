@@ -6,6 +6,8 @@ using Backlog_Checker.Models.Games;
 using LogicLayer;
 using Microsoft.AspNetCore.Mvc;
 using ModelsDTO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 
 namespace Backlog_Checker.Controllers
 {
@@ -14,6 +16,8 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Index( string sort, string filter )
         {
+            Console.Write(HttpContext.Session.GetInt32("userId"));
+
             List<Game> gamesList = new List<Game>();
             GamesManager gamesManager = new GamesManager();
             if (sort != null || filter != null)
@@ -22,7 +26,7 @@ namespace Backlog_Checker.Controllers
             }
             else
             {
-                gamesList = gamesManager.GetGames();
+                gamesList = gamesManager.GetGamesForUserById((int)HttpContext.Session.GetInt32("userId"));
             }
             IndexViewModel model = new IndexViewModel()
             {
