@@ -10,40 +10,25 @@ namespace DataAccessLayer
     {
         private SqlConnection sqlConnection = new SqlConnection();
 
-        public List<GamesModel> GetAllGames()
+        //TODO SQL INJECTION
+        public List<GamesModelDTO> GetAllGames()
         {
-            List<GamesModel> getGames = new List<GamesModel>();
-
-            List<List<string>> result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games ORDER BY title");
-
-            foreach( List<string> row in result)
-            {
-                GamesModel gamesModelTest = new GamesModel();
-                gamesModelTest.id = Convert.ToInt32(row[0]);
-                gamesModelTest.title = row[1];
-                gamesModelTest.description = row[2];
-                gamesModelTest.headerUrl = row[3];
-
-                getGames.Add(gamesModelTest);
-            }
-
-            return getGames;
+            var result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games ORDER BY title");
+            return ConvertQueryResultsIntoRows(result);
         }
 
-        public GamesModel GetSingleGame(int id)
+        public GamesModelDTO GetSingleGame(int id)
         {
-            GamesModel gamesModel = new GamesModel();
+            GamesModelDTO gamesModel = new GamesModelDTO();
 
             var query = "select * FROM games WHERE id = " + id;
 
             List<string> resultStringList = sqlConnection.ExecuteSearchQuery(query);
 
-            gamesModel.id = Convert.ToInt32(resultStringList[0]);
-            gamesModel.title = resultStringList[1];
-            gamesModel.description = resultStringList[2];
-            gamesModel.headerUrl = resultStringList[3];
-
-            //AddGame("test", "test", "linkiewinkie");
+            gamesModel.Id = Convert.ToInt32(resultStringList[0]);
+            gamesModel.Title = resultStringList[1];
+            gamesModel.Description = resultStringList[2];
+            gamesModel.HeaderUrl = resultStringList[3];
 
             return gamesModel;
         }
@@ -73,6 +58,24 @@ namespace DataAccessLayer
             sqlConnection.ExecuteNonSearchQuery(query);
 
             return;
+        }
+
+        public List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult)
+        {
+            List<GamesModelDTO> gamesList = new List<GamesModelDTO>();
+
+            foreach (List<string> row in queryResult)
+            {
+                GamesModelDTO gamesModelTemp = new GamesModelDTO();
+                gamesModelTemp.Id = Convert.ToInt32(row[0]);
+                gamesModelTemp.Title = row[1];
+                gamesModelTemp.Description = row[2];
+                gamesModelTemp.HeaderUrl = row[3];
+
+                gamesList.Add(gamesModelTemp);
+            }
+
+            return gamesList;
         }
 
     }

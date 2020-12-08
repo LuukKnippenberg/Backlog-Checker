@@ -1,4 +1,4 @@
-﻿@model ModelsDTO.GamesModel
+﻿@model ModelsDTO.GamesModelDTO
 @{
     ViewData["Title"] = "My Games";
 }
@@ -14,13 +14,13 @@
                 //@Model[0].id;
                 <div class="featured-image">
                     
-                    <img src="@Model.headerUrl" />
+                    <img src="@Model.HeaderUrl" />
                 </div>
                 <div class="content">
                     <div class="container">
-                        <h1 class="title">About @Model.title</h1>
+                        <h1 class="title">About @Model.Title</h1>
                         <p>
-                            @Model.description;
+                            @Model.Description;
                         </p>
                         <h1 class="title">Genres</h1>
                         <p>Action, Adventure and Indie</p>
@@ -31,7 +31,7 @@
                                 <a asp-action="Index" asp-controller="Games"><i class="fas fa-chevron-left"></i> Back to list </a>
                             </div>
                             <div class="edit option">
-                                <a asp-action="Edit" asp-controller="Games" asp-route-gameId="@Model.id"><i class="fas fa-edit"></i> edit</a>
+                                <a asp-action="Edit" asp-controller="Games" asp-route-gameId="@Model.Id"><i class="fas fa-edit"></i> edit</a>
                             </div>
                         </div>
                     </div>

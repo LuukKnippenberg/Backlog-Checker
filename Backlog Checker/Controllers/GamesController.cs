@@ -12,25 +12,32 @@ namespace Backlog_Checker.Controllers
     public class GamesController : Controller
     {
         [HttpGet]
-        public IActionResult Index( string gameId )
+        public IActionResult Index( string sort, string filter )
         {
+            List<Game> gamesList = new List<Game>();
             GamesManager gamesManager = new GamesManager();
+            if (sort != null || filter != null)
+            {
+                gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter);
+            }
+            else
+            {
+                gamesList = gamesManager.GetGames();
+            }
+            IndexViewModel model = new IndexViewModel()
+            {
+                Games = gamesList
+            };
 
-            List<GamesModel> gamesModelsList = gamesManager.GetGames(new GamesModel());
+            Console.WriteLine(sort);
+            Console.WriteLine(filter);
 
-            return View(gamesModelsList);
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Index(MyGamesViewModel myGameViewModel)
+        public IActionResult Index()
         {
-            GamesModel gamesModel = new GamesModel();
-            gamesModel.id = myGameViewModel.id;
-            gamesModel.title = myGameViewModel.title;
-
-            GamesManager gamesManager = new GamesManager();
-            gamesManager.GetGames(gamesModel);
-
             return View();
         }
 
@@ -39,7 +46,7 @@ namespace Backlog_Checker.Controllers
         {
             GamesManager gamesManager = new GamesManager();
 
-            GamesModel gamesModel = gamesManager.GetSingleGame(gameId);
+            GamesModelDTO gamesModel = gamesManager.GetSingleGame(gameId);
 
             return View(gamesModel);
         }
@@ -79,7 +86,7 @@ namespace Backlog_Checker.Controllers
 
             GamesManager gamesManager = new GamesManager();
 
-            GamesModel gamesModel = gamesManager.GetSingleGame(gameId);
+            GamesModelDTO gamesModel = gamesManager.GetSingleGame(gameId);
 
             return View(gamesModel);
         }

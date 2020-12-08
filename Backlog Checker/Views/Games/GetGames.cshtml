@@ -1,4 +1,4 @@
-﻿@model List<ModelsDTO.GamesModel>
+﻿@model List<ModelsDTO.GamesModelDTO>
 @{
     ViewData["Title"] = "My Games";
 }
@@ -14,10 +14,10 @@
                 <!--<span class="letter-indicator">A...</span>-->
 
                 @{
-                    foreach (ModelsDTO.GamesModel item in Model)
+                    foreach (ModelsDTO.GamesModelDTO item in Model)
                     {
                         <div class="row">
-                            <div class="col title">@item.title</div>
+                            <div class="col title">@item.Title</div>
                             <div class="col">
                                 <label class="interestedLabel"><input type="checkbox">Interested</label>
                             </div>
@@ -36,12 +36,12 @@
                 @{
                     //@Model[0].id;
                     <div class="featured-image">
-                        <img src="@Model[0].headerUrl" />
+                        <img src="@Model[0].HeaderUrl" />
                     </div>
                     <div class="content">
-                        <h1 class="title">About @Model[0].title</h1>
+                        <h1 class="title">About @Model[0].Title</h1>
                         <p>
-                            @Model[0].description;
+                            @Model[0].Description;
                         </p>
                         <h1 class="title">Genres</h1>
                         <p>Action, Adventure and Indie</p>

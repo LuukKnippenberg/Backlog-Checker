@@ -9,13 +9,33 @@ namespace LogicLayer
     public class GamesManager
     {
         private readonly GamesDB gamesDB = new GamesDB();
+        private List<Game> games = new List<Game>();
 
-        public List<GamesModel> GetGames(GamesModel gamesModel)
+        public GamesManager()
         {
-            return gamesDB.GetAllGames();
+            var AllGames = gamesDB.GetAllGames();
+            foreach(GamesModelDTO gamesModel in AllGames)
+            {
+                var game = new Game(gamesModel);
+                games.Add(game);
+            }
         }
 
-        public GamesModel GetSingleGame(int id)
+        public List<Game> GetGames()
+        {
+            //var result = gamesDB.GetAllGames();
+
+            return games;
+        }
+
+        public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter)
+        {
+            
+
+            return games;
+        }
+
+        public GamesModelDTO GetSingleGame(int id)
         {
             return gamesDB.GetSingleGame(id);
         }
@@ -33,6 +53,12 @@ namespace LogicLayer
         public void EditGame(int gameId)
         {
             gamesDB.EditGame(gameId);
+        }
+
+        private List<Game> ConvertModelDTOIntoGenericGameList(GamesModelDTO gamesModelDTO)
+        {
+
+            return new List<Game>();
         }
     }
 }
