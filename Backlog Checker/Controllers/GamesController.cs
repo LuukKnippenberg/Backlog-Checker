@@ -16,27 +16,36 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Index( string sort, string filter )
         {
-            Console.Write(HttpContext.Session.GetInt32("userId"));
-
-            List<Game> gamesList = new List<Game>();
-            GamesManager gamesManager = new GamesManager();
-            if (sort != null || filter != null)
+            int? userId = HttpContext.Session.GetInt32("userId");
+            
+            if(userId != null)
             {
-                gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter);
+                List<Game> gamesList = new List<Game>();
+                GamesManager gamesManager = new GamesManager();
+                if (sort != null || filter != null)
+                {
+                    gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter);
+                }
+                else
+                {
+                    gamesList = gamesManager.GetGamesForUserById((int)userId);
+                }
+                IndexViewModel model = new IndexViewModel()
+                {
+                    Games = gamesList
+                };
+
+                Console.WriteLine(sort);
+                Console.WriteLine(filter);
+
+                return View(model);
             }
             else
             {
-                gamesList = gamesManager.GetGamesForUserById((int)HttpContext.Session.GetInt32("userId"));
+                return RedirectToAction("Login", "Account");
             }
-            IndexViewModel model = new IndexViewModel()
-            {
-                Games = gamesList
-            };
 
-            Console.WriteLine(sort);
-            Console.WriteLine(filter);
-
-            return View(model);
+            
         }
 
         [HttpPost]

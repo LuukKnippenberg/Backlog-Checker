@@ -5,7 +5,7 @@ using ModelsDTO;
 
 namespace LogicLayer
 {
-    class Account
+    public class Account
     {
         public int Id { private set; get; }
         public string Username { private set; get; }
