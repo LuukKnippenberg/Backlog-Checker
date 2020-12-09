@@ -60,6 +60,9 @@ a:hover {
   opacity: 0.6;
   color: #95DB39;
 }
+a.button:hover {
+  color: #31353D;
+}
 
 p {
   color: #D9D9D9;
@@ -76,6 +79,7 @@ button {
   font-size: 22px !important;
   width: auto;
   color: white;
+  cursor: pointer;
 }
 button:hover {
   background-color: #292A2B;
@@ -92,11 +96,79 @@ button:hover {
   font-size: 16px;
   width: auto;
   border-radius: 7px;
+  cursor: pointer;
 }
 .button:hover {
   opacity: 0.8;
   transition: 0.3s;
   transform: scale(1.05);
+}
+
+.danger {
+  color: #db4646;
+}
+
+input:disabled {
+  background-color: grey !important;
+  border: 0;
+  -webkit-appearance: none;
+  margin: 0;
+  -moz-appearance: textfield;
+}
+
+label {
+  text-transform: capitalize;
+}
+
+.popup {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 9;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  opacity: 0;
+  z-index: -1;
+}
+.popup.show {
+  left: 0;
+  display: flex;
+  z-index: 9;
+  opacity: 1;
+}
+.popup .overlay {
+  background: rgba(128, 128, 128, 0.404);
+  width: 100%;
+  height: 100%;
+}
+.popup .content {
+  background: #31353D;
+  display: flex;
+  flex-direction: column;
+  border-radius: 7px;
+  padding: 25px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  position: relative;
+  transition: 0.3s;
+  position: fixed;
+}
+.popup .content .options {
+  display: flex;
+}
+.popup .content .option:first-of-type {
+  margin-left: auto;
+  margin-right: 10px;
+}
+.popup .content .danger {
+  background: #db4646;
+  color: #31353D;
+}
+.popup .content .danger:hover {
+  color: #31353D;
 }
 
 .navbar {
@@ -136,6 +208,13 @@ button:hover {
 }
 .navbar .brand img {
   max-width: 100%;
+}
+
+.options {
+  display: flex;
+}
+.options .option:first-of-type {
+  margin-right: 15px;
 }
 
 header {
@@ -282,6 +361,13 @@ main {
 }
 #games-list label {
   margin: 0;
+}
+#games-list a {
+  display: flex;
+}
+#games-list .fas {
+  font-size: 1.8rem;
+  margin: 0 15px;
 }
 
 .filter-options {

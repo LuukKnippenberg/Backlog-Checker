@@ -1,4 +1,5 @@
-﻿@model List<ModelsDTO.GamesModel>
+﻿@model Backlog_Checker.Models.Games.IndexViewModel;
+@using LogicLayer;
 @{
     ViewData["Title"] = "My Games";
 }
@@ -18,14 +19,21 @@
                 <!--<span class="letter-indicator">A...</span>-->
 
                 @{
-                    foreach (ModelsDTO.GamesModel item in Model)
+                    foreach (Game item in Model.Games)
                     {
-                        <div class="row" gameId="@item.id">
-                            <div class="col title">@item.title</div>
+
+                        <div class="row" gameId="@item.Id">
+                            <div class="col title">@item.Title</div>
                             <div class="col">
                                 <label class="interestedLabel"><input type="checkbox">Interested</label>
+                                <label class="completed"><input type="checkbox">Completed</label>
+                                <label class="owned"><input type="checkbox">Owned</label>
                             </div>
-                            <div class="col"><a href="Games/Game/?gameId=@item.id"><i class="fas fa-chevron-right"></i></a></div>
+
+                            <div class="col">
+                                <a asp-controller="Games" asp-action="Game" asp-route-gameId="@item.Id"><i class="fas fa-chevron-right"></i></a>
+                                <a onclick="AddGameToDelete(@item.Id, '@item.Title'); OpenPopup(); " href="#"><i class="fas fa-times danger"></i></a>
+                            </div>
                         </div>
                     }
                 }
@@ -36,3 +44,16 @@
     </div>
 
 </div>
+
+
+<div class="popup" onclick="">
+    <div class="overlay" onclick="ClosePopup()"></div>
+    <div class="content">
+        <p>Are you sure you want to delete <span id="game-to-delete"></span>?</p>
+        <div class="options">
+            <a href="#" onclick="DeleteGame( GetGameToDeleteId() );" class="option button danger">Yes</a>
+            <a href="#" onclick="ClosePopup()" class="option button ">Cancel</a>
+        </div>
+    </div>
+</div>
+

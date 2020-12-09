@@ -1,21 +1,22 @@
-﻿@model Backlog_Checker.Models.Games.MyGamesViewModel
+﻿@model ModelsDTO.GamesModelDTO
 
-@{
-    ViewData["Title"] = "AddGame";
-}
-
-<h1>AddGame</h1>
+<h4>MyGamesViewModel</h4>
 
 <div class="detail">
     <div class="block">
         <div class="row">
             <div class="col-md-4">
-                <form asp-action="AddGame">
+                <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="title" class="control-label"></label>
-                        <input asp-for="title" class="form-control" />
-                        <span asp-validation-for="title" class="text-danger"></span>
+                        <label asp-for="Id" class="control-label"></label>
+                        <input asp-for="Id" class="form-control" disabled/>
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Description" class="control-label"></label>
@@ -28,7 +29,7 @@
                         <span asp-validation-for="HeaderUrl" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Add Game" class="btn btn-primary" />
+                        <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </form>
             </div>

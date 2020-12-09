@@ -24,10 +24,13 @@ namespace Backlog_Checker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            //services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            services.AddControllersWithViews(options => options.EnableEndpointRouting = false);
 
-            //services.AddDbContext<MvcMovieContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BacklogCheckerDB")));
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(120);//You can set Time   
+            });
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +46,17 @@ namespace Backlog_Checker
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseStaticFiles();
+
+            app.UseSession();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
