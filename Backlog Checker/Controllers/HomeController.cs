@@ -24,7 +24,8 @@ namespace Backlog_Checker.Controllers
 
         public IActionResult Index()
         {
-            HttpContext.Session.SetInt32("userId", 1);
+            HttpContext.Session.SetInt32("userId", 2);
+            HttpContext.Session.SetString("username", "Pandango");
 
             if (CheckIfUserIsLoggedIn())
             {
