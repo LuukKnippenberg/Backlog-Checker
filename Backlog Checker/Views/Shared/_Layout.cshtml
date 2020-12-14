@@ -10,10 +10,10 @@
     <script src="https://kit.fontawesome.com/64a534f152.js" crossorigin="anonymous"></script>
     <!--<link rel="stylesheet" href="~/css/site.css" />-->
 </head>
-<body>
+<body class="@ViewData["PageTitle"]">
     <nav class="navbar">
         <div class="wrapper">
-            <a class="brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logo-dark-green-small.png" /></a>
+            <a class="brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logo-dark-green-small-transparent.png" /></a>
             <div class="">
                 <ul class="navbar-nav">
                     <li class="nav-item current">
@@ -22,6 +22,7 @@
                     <li class="nav-item">
                         <i class="fas fa-play"></i><a class="nav-link" asp-area="" asp-controller="Games" asp-action="Index">Games</a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <i class="fas fa-compress-alt"></i><a class="nav-link" asp-area="" asp-controller="Games" asp-action="Compare">Compare</a>
                     </li>
@@ -34,6 +35,7 @@
                     <li class="nav-item">
                         <i class="fas fa-comment-dots"></i><a class="nav-link" asp-area="" asp-controller="Feedback" asp-action="Index">Feedback</a>
                     </li>
+                    -->
                 </ul>
             </div>
         </div>
@@ -53,13 +55,15 @@
                     if (nameOK)
                     {
                         string result = System.Text.Encoding.UTF8.GetString(sessionName);
+                        <!--
                         <a asp-area="" asp-controller="Account" asp-action="Profile">
                             <div class="icon">
                                 <img />
                             </div>
                         </a>
+                        -->
                         <a asp-area="" asp-controller="Account" asp-action="Profile">@result</a>
-                        <a class="danger" asp-area="" asp-controller="Account" asp-action="LogOut">Log Out</a>
+                        <a class="danger logout" asp-area="" asp-controller="Account" asp-action="LogOut">Log Out</a>
                     }
                     else
                     {

@@ -24,7 +24,7 @@ namespace Backlog_Checker.Controllers
                 GamesManager gamesManager = new GamesManager();
                 if (sort != null || filter != null)
                 {
-                    gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter);
+                    gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter, Convert.ToInt32(userId));
                 }
                 else
                 {
@@ -87,9 +87,15 @@ namespace Backlog_Checker.Controllers
         {
             GamesManager gamesManager = new GamesManager();
 
-            gamesManager.AddGame(title, description, headerUrl);
-
-            return View();
+            try
+            {
+                gamesManager.AddGame(title, description, headerUrl);
+                return RedirectToAction("Index", "Games");
+            }
+            catch
+            {
+                throw new Exception("Failed to add game");
+            }
         }
 
         [HttpGet]

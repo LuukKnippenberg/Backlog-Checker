@@ -122,20 +122,18 @@ button{
 	color: $dangerColor;
 }
 
-
-input{
-
-	&:disabled{
-		background-color: grey!important;
-		border: 0;
-		-webkit-appearance: none;
-		margin: 0;
-		-moz-appearance: textfield;
-	} 
+.safe{
+	color: $safeColor;
 }
 
-label{
-	text-transform: capitalize;
+.flex-column{
+	flex-direction: column;
+	display: flex;
+}
+
+.flex-row{
+	flex-direction: row;
+	display: flex;
 }
 
 .popup{
@@ -490,3 +488,77 @@ main{
 	}
 }
 
+.login{
+	.navbar{
+		background: rgba(0,0,0,0);
+		position: absolute;
+		z-index: 9;
+	}
+	
+	main{
+		background-image: url(../../img/svg/Wave.svg);
+		background-repeat: no-repeat;
+		background-position: bottom;
+		background-size: contain;
+	}
+
+	.navbar-nav{
+		display: none;
+	}
+
+	.wrapper{
+		display: flex;
+		height: 100%;
+	}
+
+	.block.form-block{
+		display: flex;
+		justify-self: center;
+		align-self: center;
+		margin: 0 auto;
+	}
+
+	header{
+		display: none;
+	}
+}
+
+.register{
+
+	.navbar{
+		background: rgba(0,0,0,0);
+		position: absolute;
+		z-index: 9;
+	}
+
+	.wrapper{
+		display: flex;
+		height: 100%;
+	}
+
+	main{
+		background-image: url(../../img/svg/Wave.svg);
+		background-repeat: no-repeat;
+		background-position: bottom;
+		background-size: contain;
+	}
+
+	.navbar-nav{
+		display: none;
+	}
+
+	.block.form-block{
+		display: flex;
+		justify-self: center;
+		align-self: center;
+		margin: 0 auto;
+	}
+
+	header{
+		display: none;
+	}
+}
+
+.logout{
+	margin-right: 5px;
+}

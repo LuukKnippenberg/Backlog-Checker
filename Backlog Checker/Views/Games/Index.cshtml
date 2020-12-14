@@ -10,8 +10,14 @@
 
     <div class="block">
         <div class="filter-options">
-            <a href="#" class="option button">Filter</a>
-            <a href="#" class="option button">Sort</a>
+            <button href="#" class="option button">Filter</button>
+            <div class="filters">
+                <div class="filter-option">Owned</div>
+                <div class="filter-option">Completed</div>
+                <div class="filter-option">Interested</div>
+            </div>
+            
+            <button href="#" class="option button">Sort</button>
             <a class="option button nav-link" asp-area="" asp-controller="Games" asp-action="AddGame">Add</a>
         </div>
         <div id="games-list">

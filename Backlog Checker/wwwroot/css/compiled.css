@@ -108,16 +108,18 @@ button:hover {
   color: #db4646;
 }
 
-input:disabled {
-  background-color: grey !important;
-  border: 0;
-  -webkit-appearance: none;
-  margin: 0;
-  -moz-appearance: textfield;
+.safe {
+  color: #95DB39;
 }
 
-label {
-  text-transform: capitalize;
+.flex-column {
+  flex-direction: column;
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+  display: flex;
 }
 
 .popup {
@@ -404,6 +406,154 @@ main {
 .featured-game p {
   font-size: 14px;
   line-height: 1.5rem;
+}
+
+.login .navbar {
+  background: rgba(0, 0, 0, 0);
+  position: absolute;
+  z-index: 9;
+}
+.login main {
+  background-image: url(../../img/svg/Wave.svg);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+}
+.login .navbar-nav {
+  display: none;
+}
+.login .wrapper {
+  display: flex;
+  height: 100%;
+}
+.login .block.form-block {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin: 0 auto;
+}
+.login header {
+  display: none;
+}
+
+.register .navbar {
+  background: rgba(0, 0, 0, 0);
+  position: absolute;
+  z-index: 9;
+}
+.register .wrapper {
+  display: flex;
+  height: 100%;
+}
+.register main {
+  background-image: url(../../img/svg/Wave.svg);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+}
+.register .navbar-nav {
+  display: none;
+}
+.register .block.form-block {
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin: 0 auto;
+}
+.register header {
+  display: none;
+}
+
+.logout {
+  margin-right: 5px;
+}
+
+.block.form-block .wrapper {
+  flex-direction: column;
+}
+.block.form-block .wrapper form {
+  display: flex;
+  flex-direction: row;
+}
+.block.form-block .form-submit {
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.block.form-block .form-submit button {
+  background: #95DB39;
+  color: #31353D;
+  padding: 5px 25px;
+  border: 0;
+  transition: 0.3s;
+}
+.block.form-block .form-submit button:focus {
+  border: 0;
+}
+.block.form-block .form-submit button:active {
+  border: 0;
+}
+.block.form-block .form-submit button:hover {
+  opacity: 0.7;
+}
+
+.form-control {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border-bottom: 2px solid #95DB39;
+  border-radius: 0;
+  color: #D9D9D9;
+  margin-right: 15px;
+}
+.form-control:active {
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 2px solid #95DB39;
+  color: #D9D9D9;
+}
+.form-control:focus {
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 2px solid #95DB39;
+  color: #D9D9D9;
+  box-shadow: none;
+  outline: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form-group label {
+  margin-bottom: 0;
+  margin-top: auto;
+  margin-right: 15px;
+}
+
+.form-switch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form-switch p {
+  margin: 0 10px 0 0;
+}
+
+input {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border-bottom: 2px solid #95DB39;
+}
+input:disabled {
+  background-color: grey !important;
+  border: 0;
+  -webkit-appearance: none;
+  margin: 0;
+  -moz-appearance: textfield;
+}
+
+label {
+  text-transform: capitalize;
 }
 
 /*# sourceMappingURL=compiled.css.map */

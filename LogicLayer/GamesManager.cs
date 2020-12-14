@@ -10,7 +10,6 @@ namespace LogicLayer
     {
         private readonly GamesDB gamesDB = new GamesDB();
         private List<Game> games = new List<Game>();
-
         public GamesManager()
         {
             var AllGames = gamesDB.GetAllGames();
@@ -28,15 +27,43 @@ namespace LogicLayer
             return games;
         }
 
+        private List<Game> GetGamesUserData(List<Game> games, int userId)
+        {
+            List<Game> gamesWithUserData = new List<Game>();
+
+            List<Game> queryResult = GetGamesForUserById(userId);
+
+            foreach (var item in queryResult)
+            {
+                if (item.Owned == true)
+                {
+                    Console.Write(item.Id + " true");
+                }
+            }
+
+            return games;
+        }
+
         public List<Game> GetGamesForUserById(int id)
         {
             List<Game> gamesFromUser = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(id));
             return gamesFromUser;
         }
 
-        public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter)
+        public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter, int userId)
         {
-            
+            List<Game> filteredList = new List<Game>();
+
+            if(filter == "owned")
+            {
+                foreach (var item in games)
+                {
+                    if (item.Owned)
+                    {
+                        filteredList.Add(item);
+                    }
+                }
+            }
 
             return games;
         }
