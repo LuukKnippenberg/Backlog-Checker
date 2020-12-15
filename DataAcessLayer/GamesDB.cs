@@ -13,21 +13,20 @@ namespace DataAccessLayer
         //TODO SQL INJECTION
         public List<GamesModelDTO> GetAllGames()
         {
-            var result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games ORDER BY title");
+            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM users INNER JOIN users_games ON users_games.user_id = users.id INNER JOIN games ON users_games.game_id = games.id WHERE users_games.user_id = '{1}'";
+
+            var result = sqlConnection.ExecuteSearchQueryWithListReturn(query);
+
             return ConvertQueryResultsIntoRows(result);
         }
 
         public List<GamesModelDTO> GetGamesForUserById(int id)
         {
-            var gameIds = sqlConnection.ExecuteSearchQueryWithListReturn($"SELECT * FROM users_games where user_id = {id}");
+            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM users INNER JOIN users_games ON users_games.user_id = users.id INNER JOIN games ON users_games.game_id = games.id WHERE users_games.user_id = '{id}'";
 
-            List<List<string>> result = new List<List<string>>(); 
-            foreach(var item in gameIds)
-            {
-                int gameId = Convert.ToInt32(item[1]);
-                result.Add(sqlConnection.ExecuteSearchQuery($"SELECT * from games WHERE id = {gameId}"));
-            }
-            return ConvertQueryResultsIntoRows(result);
+            var gamesByUserId = sqlConnection.ExecuteSearchQueryWithListReturn(query);
+
+            return ConvertQueryResultsIntoRows(gamesByUserId);
         }
 
         public GamesModelDTO GetSingleGame(int id)
@@ -44,6 +43,28 @@ namespace DataAccessLayer
             gamesModel.HeaderUrl = resultStringList[3];
 
             return gamesModel;
+        }
+
+        public void ChangeUserToGameRelation(int gameId, string subject, int userId)
+        {
+            var query = $"SELECT * FROM users_games WHERE user";
+        }
+
+        public void ToggleBool(int gameId, bool updateWith, string fieldToUpdate)
+        {
+            string UpdateWithString = Convert.ToString(updateWith);
+            if(UpdateWithString == "True")
+            {
+                UpdateWithString = "1";
+            }
+            else if(UpdateWithString == "False")
+            {
+                UpdateWithString = "0";
+            }
+
+            var query = $"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = '1' AND game_id = '{gameId}'";
+
+            sqlConnection.ExecuteNonSearchQuery(query);
         }
 
         public void AddGame(string title, string description, string headerUrl)
@@ -84,11 +105,19 @@ namespace DataAccessLayer
                 gamesModelTemp.Title = row[1];
                 gamesModelTemp.Description = row[2];
                 gamesModelTemp.HeaderUrl = row[3];
+                gamesModelTemp.Owned = ConvertStringBoolIntoNumericalBool(row[4]);
+                gamesModelTemp.Completed = ConvertStringBoolIntoNumericalBool(row[5]);
+                gamesModelTemp.interested = ConvertStringBoolIntoNumericalBool(row[6]);
 
                 gamesList.Add(gamesModelTemp);
             }
 
             return gamesList;
+        }
+
+        private bool ConvertStringBoolIntoNumericalBool(string boolString)
+        {
+            return Convert.ToBoolean(Convert.ToInt32(boolString));
         }
 
     }

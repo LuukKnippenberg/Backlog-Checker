@@ -45,7 +45,23 @@ function GetGameToDeleteId()
     return gameToDeleteId;
 }
 
+function ChangeUserToGameRelation(id, subject) {
+
+    $.ajax({
+        url: '/Games/ToggleOwned',
+        data: {
+            gameId: id,
+            subject: subject
+        }
+    }).done(function () {
+        ClosePopup();
+        location.reload();
+    });
+
+}
+
 $( document ).ready(function() 
 {
 
 });
+

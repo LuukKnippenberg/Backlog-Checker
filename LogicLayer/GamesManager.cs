@@ -46,8 +46,8 @@ namespace LogicLayer
 
         public List<Game> GetGamesForUserById(int id)
         {
-            List<Game> gamesFromUser = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(id));
-            return gamesFromUser;
+            games = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(id));
+            return games;
         }
 
         public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter, int userId)
@@ -86,6 +86,17 @@ namespace LogicLayer
         public void EditGame(int gameId)
         {
             gamesDB.EditGame(gameId);
+        }
+
+        public void ToggleInterest(int gameId, string subject)
+        {
+            foreach (var game in games)
+            {
+                if(game.Id == gameId)
+                {
+                    game.ToggleStates(subject);
+                }
+            }
         }
 
         private List<Game> ConvertModelDTOIntoGenericGameList(List<GamesModelDTO> gamesModelDTO)

@@ -119,5 +119,14 @@ namespace Backlog_Checker.Controllers
 
             return RedirectToAction("Game", new { gameId = id });
         }
+
+        public void ToggleOwned(int gameId, string subject)
+        {
+            GamesManager gamesManager = new GamesManager();
+
+            gamesManager.ToggleInterest(gameId, subject);
+        }
+
+
     }
 }
