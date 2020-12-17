@@ -11,7 +11,6 @@ function Test()
 }
 
 function ClosePopup(){
-
     $('.popup').removeClass('show');
 }
 
@@ -23,7 +22,6 @@ function OpenPopup()
 
 function DeleteGame(id)
 {
-
     $.ajax({
         url: '/Games/DeleteGame',
         data: { gameId: id }
@@ -31,7 +29,6 @@ function DeleteGame(id)
         ClosePopup();
         location.reload(); 
     });
-
 }
 
 function AddGameToDelete(id, title)
@@ -57,11 +54,19 @@ function ChangeUserToGameRelation(id, subject) {
         ClosePopup();
         location.reload();
     });
-
 }
+
+
 
 $( document ).ready(function() 
 {
+    $( "#filter" ).click(function() {
+        $( ".filters" ).toggleClass("show");
+    });
+
+    $("#filter-close").click(function () {
+        $(".filters").toggleClass("show");
+    });
 
 });
 

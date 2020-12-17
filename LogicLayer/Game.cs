@@ -36,7 +36,7 @@ namespace LogicLayer
             HeaderUrl = gameDTO.HeaderUrl;
         }
 
-        public void ToggleStates(string subject)
+        public void ToggleUserGameRelation(string subject, int userId)
         {
             GamesDB gamesDB = new GamesDB();
 
@@ -44,15 +44,15 @@ namespace LogicLayer
             {
                 case "owned":
                     Owned = !Owned;
-                    gamesDB.ToggleBool(Id, Owned, subject);
+                    gamesDB.ToggleUserGameRelation(Id, Owned, subject, userId);
                     break;
                 case "completed":
                     Completed = !Completed;
-                    gamesDB.ToggleBool(Id, Completed, subject);
+                    gamesDB.ToggleUserGameRelation(Id, Completed, subject, userId);
                     break;
                 case "interested":
                     Interested = !Interested;
-                    gamesDB.ToggleBool(Id, Interested, subject);
+                    gamesDB.ToggleUserGameRelation(Id, Interested, subject, userId);
                     break;
 
             }

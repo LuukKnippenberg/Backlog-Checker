@@ -10,60 +10,36 @@ namespace LogicLayer
     {
         private readonly GamesDB gamesDB = new GamesDB();
         private List<Game> games = new List<Game>();
-        public GamesManager()
+        public GamesManager(int userId)
         {
-            var AllGames = gamesDB.GetAllGames();
-            foreach(GamesModelDTO gamesModel in AllGames)
+            var AllGames = gamesDB.GetAllGames(userId);
+            foreach (GamesModelDTO gamesModel in AllGames)
             {
                 var game = new Game(gamesModel);
                 games.Add(game);
             }
         }
 
-        public List<Game> GetGames()
+        public List<Game> GetGamesForUserById(int userId)
         {
-            //var result = gamesDB.GetAllGames();
-
-            return games;
-        }
-
-        private List<Game> GetGamesUserData(List<Game> games, int userId)
-        {
-            List<Game> gamesWithUserData = new List<Game>();
-
-            List<Game> queryResult = GetGamesForUserById(userId);
-
-            foreach (var item in queryResult)
-            {
-                if (item.Owned == true)
-                {
-                    Console.Write(item.Id + " true");
-                }
-            }
-
-            return games;
-        }
-
-        public List<Game> GetGamesForUserById(int id)
-        {
-            games = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(id));
+            games = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(userId));
             return games;
         }
 
         public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter, int userId)
         {
-            List<Game> filteredList = new List<Game>();
+            List<Game> filteredList;
 
-            if(filter == "owned")
+            if(filter == "all")
             {
-                foreach (var item in games)
-                {
-                    if (item.Owned)
-                    {
-                        filteredList.Add(item);
-                    }
-                }
+                filteredList = ConvertModelDTOIntoGenericGameList(gamesDB.GetAllGames(userId));
             }
+            else
+            {
+                filteredList = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserByIdWithFilter(userId, filter, "1"));
+            }
+
+            games = filteredList;
 
             return games;
         }
@@ -78,9 +54,17 @@ namespace LogicLayer
             gamesDB.AddGame(title, description, headerUrl);
         }
 
-        public void DeleteGame(int gameId) 
+        public void DeleteGame(int gameId, string rights, int userId) 
         {
-            gamesDB.DeleteGame(gameId);
+            if(rights == "admin")
+            {
+                gamesDB.DeleteGame(gameId);
+            }
+            else
+            {
+                gamesDB.DeleteGameUserLink(gameId, userId);
+            }
+            
         }
 
         public void EditGame(int gameId)
@@ -88,13 +72,13 @@ namespace LogicLayer
             gamesDB.EditGame(gameId);
         }
 
-        public void ToggleInterest(int gameId, string subject)
+        public void ToggleUserGameRelation(int gameId, string subject, int userId)
         {
             foreach (var game in games)
             {
                 if(game.Id == gameId)
                 {
-                    game.ToggleStates(subject);
+                    game.ToggleUserGameRelation(subject, userId);
                 }
             }
         }

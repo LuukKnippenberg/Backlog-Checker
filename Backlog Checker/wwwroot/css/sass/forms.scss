@@ -47,6 +47,7 @@
     border-radius: 0;
     color: $thirdColor;
     margin-right: 15px;
+    max-width: 350px;
 
     &:active{
         background-color: rgba(0,0,0,0);
@@ -72,6 +73,7 @@
         margin-bottom: 0;
         margin-top: auto;
         margin-right: 15px;
+        min-width: 80px;
     }
 }
 
@@ -102,4 +104,8 @@ input{
 
 label{
 	text-transform: capitalize;
+}
+
+.filter-options{
+    
 }
