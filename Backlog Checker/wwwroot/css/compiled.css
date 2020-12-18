@@ -218,6 +218,9 @@ button:hover {
 .options .option:first-of-type {
   margin-right: 15px;
 }
+.options .edit {
+  margin-left: auto;
+}
 
 header {
   height: 100px;
