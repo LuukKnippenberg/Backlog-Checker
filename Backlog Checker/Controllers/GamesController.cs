@@ -16,27 +16,31 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Index( string sort, string filter )
         {
-            Console.Write(HttpContext.Session.GetInt32("userId"));
-
-            List<Game> gamesList = new List<Game>();
-            GamesManager gamesManager = new GamesManager();
-            if (sort != null || filter != null)
+            int? userId = HttpContext.Session.GetInt32("userId");
+            
+            if(userId != null)
             {
-                gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter);
+                List<Game> gamesList;
+                GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
+                if (sort != null || filter != null)
+                {
+                    gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter, Convert.ToInt32(userId));
+                }
+                else
+                {
+                    gamesList = gamesManager.GetGamesForUserById((int)userId);
+                }
+                IndexViewModel model = new IndexViewModel()
+                {
+                    Games = gamesList
+                };
+
+                return View(model);
             }
             else
             {
-                gamesList = gamesManager.GetGamesForUserById((int)HttpContext.Session.GetInt32("userId"));
-            }
-            IndexViewModel model = new IndexViewModel()
-            {
-                Games = gamesList
-            };
-
-            Console.WriteLine(sort);
-            Console.WriteLine(filter);
-
-            return View(model);
+                return RedirectToAction("Login", "Account");
+            }            
         }
 
         [HttpPost]
@@ -48,7 +52,9 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Game(int gameId)
         {
-            GamesManager gamesManager = new GamesManager();
+            int? userId = HttpContext.Session.GetInt32("userId");
+
+            GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
 
             GamesModelDTO gamesModel = gamesManager.GetSingleGame(gameId);
 
@@ -57,9 +63,12 @@ namespace Backlog_Checker.Controllers
 
         public void DeleteGame(int gameId)
         {
-            GamesManager gamesManager = new GamesManager();
+            string rights = HttpContext.Session.GetString("rights");
+            int? userId = HttpContext.Session.GetInt32("userId");
 
-            gamesManager.DeleteGame(gameId);
+            GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
+
+            gamesManager.DeleteGame(gameId, rights, Convert.ToInt32(userId));
         }
 
         public IActionResult Compare()
@@ -76,19 +85,27 @@ namespace Backlog_Checker.Controllers
         [HttpPost]
         public IActionResult AddGame(string title, string description, string headerUrl)
         {
-            GamesManager gamesManager = new GamesManager();
+            int? userId = HttpContext.Session.GetInt32("userId");
+            GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
 
-            gamesManager.AddGame(title, description, headerUrl);
-
-            return View();
+            try
+            {
+                gamesManager.AddGame(title, description, headerUrl);
+                return RedirectToAction("Index", "Games");
+            }
+            catch
+            {
+                throw new Exception("Failed to add game");
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int gameId)
         {
             Console.WriteLine($"gameId: {gameId}");
+            int? userId = HttpContext.Session.GetInt32("userId");
 
-            GamesManager gamesManager = new GamesManager();
+            GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
 
             GamesModelDTO gamesModel = gamesManager.GetSingleGame(gameId);
 
@@ -98,11 +115,22 @@ namespace Backlog_Checker.Controllers
         [HttpPost]
         public IActionResult Edit(int id, string title, string description, string headerUrl)
         {
-            GamesManager gamesManager = new GamesManager();
+            int? userId = HttpContext.Session.GetInt32("userId");
+            GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
 
             gamesManager.EditGame(id);
 
             return RedirectToAction("Game", new { gameId = id });
         }
+
+        public void ToggleOwned(int gameId, string subject)
+        {
+            int? userId = HttpContext.Session.GetInt32("userId");
+            GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
+
+            gamesManager.ToggleUserGameRelation(gameId, subject, Convert.ToInt32(userId));
+        }
+
+
     }
 }

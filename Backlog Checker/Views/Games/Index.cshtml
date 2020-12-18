@@ -10,8 +10,17 @@
 
     <div class="block">
         <div class="filter-options">
-            <a href="#" class="option button">Filter</a>
-            <a href="#" class="option button">Sort</a>
+            <button href="#" class="option button" id="filter">Filter</button>
+            <div class="filters">
+                <div class="filter-option"><a asp-area="" asp-controller="Games" asp-action="Index">Reset</a></div>
+                <div class="filter-option"><a href="?filter=owned">Owned</a></div>
+                <div class="filter-option"><a href="?filter=completed">Completed</a></div>
+                <div class="filter-option"><a href="?filter=interested">Interested</a></div>
+                <div class="filter-option"><a href="?filter=all">All Games</a></div>
+                <div class="filter-option"><a href="#" id="filter-close">Close</a></div>
+            </div>
+            
+            <button href="#" class="option button" id="sort">Sort</button>
             <a class="option button nav-link" asp-area="" asp-controller="Games" asp-action="AddGame">Add</a>
         </div>
         <div id="games-list">
@@ -19,17 +28,16 @@
                 <!--<span class="letter-indicator">A...</span>-->
 
                 @{
+                    string checkedString = "checked";
                     foreach (Game item in Model.Games)
                     {
-
                         <div class="row" gameId="@item.Id">
                             <div class="col title">@item.Title</div>
                             <div class="col">
-                                <label class="interestedLabel"><input type="checkbox">Interested</label>
-                                <label class="completed"><input type="checkbox">Completed</label>
-                                <label class="owned"><input type="checkbox">Owned</label>
+                                <label class="interestedLabel"><input type="checkbox" @{if (item.Interested == true) { @checkedString }} onchange="ChangeUserToGameRelation(@item.Id, 'interested')">Interested</label>
+                                <label class="completed"><input type="checkbox" @{if (item.Completed == true) { @checkedString }} onchange="ChangeUserToGameRelation(@item.Id, 'completed')">>Completed</label>
+                                <label class="owned"><input type="checkbox" @{if (item.Owned == true) { @checkedString }} onchange="ChangeUserToGameRelation(@item.Id, 'owned')">>Owned</label>
                             </div>
-
                             <div class="col">
                                 <a asp-controller="Games" asp-action="Game" asp-route-gameId="@item.Id"><i class="fas fa-chevron-right"></i></a>
                                 <a onclick="AddGameToDelete(@item.Id, '@item.Title'); OpenPopup(); " href="#"><i class="fas fa-times danger"></i></a>

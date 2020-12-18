@@ -11,7 +11,6 @@ function Test()
 }
 
 function ClosePopup(){
-
     $('.popup').removeClass('show');
 }
 
@@ -23,7 +22,6 @@ function OpenPopup()
 
 function DeleteGame(id)
 {
-
     $.ajax({
         url: '/Games/DeleteGame',
         data: { gameId: id }
@@ -31,7 +29,6 @@ function DeleteGame(id)
         ClosePopup();
         location.reload(); 
     });
-
 }
 
 function AddGameToDelete(id, title)
@@ -45,7 +42,31 @@ function GetGameToDeleteId()
     return gameToDeleteId;
 }
 
+function ChangeUserToGameRelation(id, subject) {
+
+    $.ajax({
+        url: '/Games/ToggleOwned',
+        data: {
+            gameId: id,
+            subject: subject
+        }
+    }).done(function () {
+        ClosePopup();
+        location.reload();
+    });
+}
+
+
+
 $( document ).ready(function() 
 {
+    $( "#filter" ).click(function() {
+        $( ".filters" ).toggleClass("show");
+    });
+
+    $("#filter-close").click(function () {
+        $(".filters").toggleClass("show");
+    });
 
 });
+

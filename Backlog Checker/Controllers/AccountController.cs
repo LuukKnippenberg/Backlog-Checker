@@ -6,6 +6,9 @@ using Backlog_Checker.Models.Account;
 using Microsoft.AspNetCore.Mvc;
 using LogicLayer;
 using System.Security.Cryptography;
+using DataAccessLayer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 
 namespace Backlog_Checker.Controllers
 {
@@ -27,7 +30,20 @@ namespace Backlog_Checker.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            return View();
+            AccountsManager accountsManager = new AccountsManager();
+
+            if(accountsManager.LoginAccount(username, password))
+            {
+                Account CurrentAccount = accountsManager.ReturnLoggedInUserData();
+                HttpContext.Session.SetInt32("userId", CurrentAccount.Id);
+                HttpContext.Session.SetString("username", CurrentAccount.Username);
+                HttpContext.Session.SetString("rights", CurrentAccount.Rights);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]
@@ -57,6 +73,16 @@ namespace Backlog_Checker.Controllers
         public IActionResult Settings()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Remove("userId");
+            HttpContext.Session.Remove("username");
+            HttpContext.Session.Remove("rights");
+
+            return RedirectToAction("Login", "Account");
         }
     }
 }
