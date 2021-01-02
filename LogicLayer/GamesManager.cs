@@ -67,9 +67,9 @@ namespace LogicLayer
             
         }
 
-        public void EditGame(int gameId)
+        public void EditGame(int gameId, string title, string description, string headerUrl)
         {
-            gamesDB.EditGame(gameId);
+            gamesDB.EditGame(gameId, title, description, headerUrl);
         }
 
         public void ToggleUserGameRelation(int gameId, string subject, int userId)

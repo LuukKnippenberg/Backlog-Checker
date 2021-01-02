@@ -113,14 +113,18 @@ namespace Backlog_Checker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string title, string description, string headerUrl)
+        public IActionResult Edit(GamesModelDTO model)
         {
+            int gameId = 30; 
+
+            Console.WriteLine($"gameId: {model.Id}");
+
             int? userId = HttpContext.Session.GetInt32("userId");
             GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
 
-            gamesManager.EditGame(id);
+            gamesManager.EditGame(model.Id, model.Title, model.Description, model.HeaderUrl);
 
-            return RedirectToAction("Game", new { gameId = id });
+            return RedirectToAction("Game", new { gameId = gameId });
         }
 
         public void ToggleOwned(int gameId, string subject)

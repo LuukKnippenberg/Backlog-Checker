@@ -11,40 +11,61 @@ namespace DataAccessLayer
         private SqlConnection sqlConnection = new SqlConnection();
 
         //TODO SQL INJECTION
-        public List<GamesModelDTO> GetAllGames(int userId)
+        public List<GamesModelDTO> GetAllGames(int userId) //DONE
         {
-            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM games left JOIN users_games ON games.id = users_games.game_id AND users_games.user_id = '{userId}'";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@UserID", userId.ToString() }
+            };
 
-            var result = sqlConnection.ExecuteSearchQueryWithListReturn(query);
+            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM games left JOIN users_games ON games.id = users_games.game_id AND users_games.user_id = @UserID";
+
+            var result = sqlConnection.ExecuteSearchQueryWithListReturnParameters(query, param);
 
             return ConvertQueryResultsIntoRows(result);
         }
 
-        public List<GamesModelDTO> GetGamesForUserById(int userID)
+        public List<GamesModelDTO> GetGamesForUserById(int userId) //DONE
         {
-            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM users INNER JOIN users_games ON users_games.user_id = users.id INNER JOIN games ON users_games.game_id = games.id WHERE users_games.user_id = '{userID}'";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@UserID", userId.ToString() }
+            };
 
-            var gamesByUserId = sqlConnection.ExecuteSearchQueryWithListReturn(query);
+            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM users INNER JOIN users_games ON users_games.user_id = users.id INNER JOIN games ON users_games.game_id = games.id WHERE users_games.user_id = @UserID";
+
+            var gamesByUserId = sqlConnection.ExecuteSearchQueryWithListReturnParameters(query, param);
 
             return ConvertQueryResultsIntoRows(gamesByUserId);
         }
 
-        public List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue)
+        public List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue) //DONE
         {
-            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM users INNER JOIN users_games ON users_games.user_id = users.id INNER JOIN games ON users_games.game_id = games.id WHERE users_games.user_id = '{userId}' AND users_games.{whereClause} = '{whereValue}'";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@UserID", userId.ToString() },
+                new string[] { "@WhereClouse", whereClause},
+                new string[] { "@WhereValue", whereValue}
+            };
+            var query = $"SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM users INNER JOIN users_games ON users_games.user_id = users.id INNER JOIN games ON users_games.game_id = games.id WHERE users_games.user_id = @UserId AND users_games.{whereClause} = @WhereValue";
 
-            var gamesByUserId = sqlConnection.ExecuteSearchQueryWithListReturn(query);
+            var gamesByUserId = sqlConnection.ExecuteSearchQueryWithListReturnParameters(query, param);
 
             return ConvertQueryResultsIntoRows(gamesByUserId);
         }
 
-        public GamesModelDTO GetSingleGame(int id)
+        public GamesModelDTO GetSingleGame(int id) //DONE
         {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@id", id.ToString() }
+            };
+
             GamesModelDTO gamesModel = new GamesModelDTO();
 
-            var query = "select * FROM games WHERE id = " + id;
+            var query = "select * FROM games WHERE id = @id";
 
-            List<string> resultStringList = sqlConnection.ExecuteSearchQuery(query);
+            List<string> resultStringList = sqlConnection.ExecuteSearchQueryParameters(query, param);
 
             gamesModel.Id = Convert.ToInt32(resultStringList[0]);
             gamesModel.Title = resultStringList[1];
@@ -54,9 +75,9 @@ namespace DataAccessLayer
             return gamesModel;
         }
 
-        public void ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
+        public void ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId) //50% DONE
         {
-            if(!IfRelationExistsBetweenGameAndUser(userId, gameId))
+            if (!IfRelationExistsBetweenGameAndUser(userId, gameId))
             {
                 CreateRelationBetweenGameAndUser(userId, gameId);
             }
@@ -71,50 +92,85 @@ namespace DataAccessLayer
                 UpdateWithString = "0";
             }
 
-            Console.WriteLine($"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = '{userId}' AND game_id = '{gameId}'");
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString() },
+                new string[] { "@UpdateWith", UpdateWithString },
+                new string[] { "@FieldToUpdate", fieldToUpdate },
+                new string[] { "@UserId", userId.ToString() }
+            };
 
-            var query = $"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = '{userId}' AND game_id = '{gameId}'";
+            var query = $"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = @UserId AND game_id = @GameId";
+            //var query = $"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = '{userId}' AND game_id = '{gameId}'";
 
-            sqlConnection.ExecuteNonSearchQuery(query);
+            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
-        public void AddGame(string title, string description, string headerUrl)
+        public void AddGame(string title, string description, string headerUrl) //DONE
         {
-            var query = $"INSERT INTO games(title, description, headerUrl ) VALUES ('{title}', '{description}', '{headerUrl}')";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@Title", title},
+                new string[] { "@Description", description},
+                new string[] { "@HeaderUrl", headerUrl}
+            };
 
-            sqlConnection.ExecuteNonSearchQuery(query);
+
+            var query = $"INSERT INTO games(title, description, headerUrl ) VALUES (@Title, @Description, @HeaderUrl)";
+
+            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
 
             return;
         }
 
-        public void DeleteGame(int gameId)
+        public void DeleteGame(int gameId) //DONE
         {
-            var query = $"DELETE FROM games WHERE id = {gameId}";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString() }
+            };
 
-            sqlConnection.ExecuteNonSearchQuery(query);
+            var query = $"DELETE FROM games WHERE id = @GameId";
+
+            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
 
             return;
         }
 
-        public void DeleteGameUserLink(int gameId, int userId)
+        public void DeleteGameUserLink(int gameId, int userId) //DONE
         {
-            var query = $"DELETE FROM users_games WHERE game_id = '{gameId}' AND user_id = '{userId}'";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString() },
+                new string[] { "@UserId", userId.ToString() }
+            };
 
-            sqlConnection.ExecuteNonSearchQuery(query);
+            var query = $"DELETE FROM users_games WHERE game_id = @GameId AND user_id = @UserId";
+
+            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
 
             return;
         }
 
-        public void EditGame(int gameId)
+        public void EditGame(int gameId, string title, string description, string headerUrl) //NOT DONE
         {
-            var query = ($"SELECT * FROM games where id = {gameId}");
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString() },
+                new string[] { "@Title", title },
+                new string[] { "@Description", description },
+                new string[] { "@HeaderUrl", headerUrl },
+            };
 
-            sqlConnection.ExecuteNonSearchQuery(query);
+            var query = ($"UPDATE games SET title = @Title, description = @Description, headerUrl = @HeaderUrl WHERE id = @GameId");
+            //var query = ($"SELECT * FROM games where id = {gameId}");
+
+            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
 
             return;
         }
 
-        public List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult)
+        public List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult) //NOT DONE
         {
             List<GamesModelDTO> gamesList = new List<GamesModelDTO>();
 
@@ -145,7 +201,7 @@ namespace DataAccessLayer
             return gamesList;
         }
 
-        private bool ConvertStringBoolIntoNumericalBool(string boolString)
+        private bool ConvertStringBoolIntoNumericalBool(string boolString) //NOT DONE
         {
             if(boolString == "" || boolString is null)
             {
@@ -158,7 +214,7 @@ namespace DataAccessLayer
             
         }
 
-        private bool IfRelationExistsBetweenGameAndUser(int userId, int gameId)
+        private bool IfRelationExistsBetweenGameAndUser(int userId, int gameId) //NOT DONE
         {
             var query = $"SELECT * FROM users_games WHERE user_id = '{userId}' AND game_id = '{gameId}'";
 
@@ -174,7 +230,7 @@ namespace DataAccessLayer
             }
         }
         
-        private void CreateRelationBetweenGameAndUser(int userId, int gameId)
+        private void CreateRelationBetweenGameAndUser(int userId, int gameId) //NOT DONE
         {
             var query = $"INSERT INTO users_games(game_id, user_id, interested, completed, owned) VALUES ('{gameId}', '{userId}', '', '', '')";
 
