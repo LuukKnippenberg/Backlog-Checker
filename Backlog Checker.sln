@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayer", "LogicLayer\Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsDTO", "ModelsDTO\ModelsDTO.csproj", "{98808EDE-5B2C-4884-A1B7-62A0513020A7}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BacklogCheckerDB", "BacklogCheckerDB\BacklogCheckerDB.sqlproj", "{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Interface.csproj", "{A0745865-A1BC-40D3-8295-AFEC34BB935B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,12 +35,10 @@ Global
 		{98808EDE-5B2C-4884-A1B7-62A0513020A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98808EDE-5B2C-4884-A1B7-62A0513020A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98808EDE-5B2C-4884-A1B7-62A0513020A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56F8E1EF-D1AB-4163-89A7-90A4C5F6490E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A0745865-A1BC-40D3-8295-AFEC34BB935B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0745865-A1BC-40D3-8295-AFEC34BB935B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0745865-A1BC-40D3-8295-AFEC34BB935B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0745865-A1BC-40D3-8295-AFEC34BB935B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

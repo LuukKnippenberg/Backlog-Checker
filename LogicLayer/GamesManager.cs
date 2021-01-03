@@ -3,10 +3,11 @@ using ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Interfaces;
 
 namespace LogicLayer
 {
-    public class GamesManager
+    public class GamesManager : IGamesManagerDB
     {
         private readonly GamesDB gamesDB = new GamesDB();
         private List<Game> games = new List<Game>();

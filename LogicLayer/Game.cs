@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DataAccessLayer;
+using Interfaces;
 
 namespace LogicLayer
 {
-    public class Game
+    public class Game : IGameDB
     {
         public int Id { private set; get; }
         public string Title { private set; get; }
