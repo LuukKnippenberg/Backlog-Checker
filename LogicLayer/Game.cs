@@ -37,6 +37,16 @@ namespace LogicLayer
             HeaderUrl = gameDTO.HeaderUrl;
         }
 
+        public void DeleteGame(GamesDB gamesDb)
+        {
+            gamesDb.DeleteGame(Id);
+        }
+
+        public void EditGame()
+        {
+            //TODO
+        }
+
         public void ToggleUserGameRelation(string subject, int userId)
         {
             GamesDB gamesDB = new GamesDB();
