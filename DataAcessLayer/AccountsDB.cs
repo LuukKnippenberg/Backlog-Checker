@@ -12,11 +12,22 @@ namespace DataAccessLayer
 
         public void RegisterAccount(string username, string email, string password)
         {
+
+
             const string rights = "user";
 
-            var query = $"INSERT INTO users(username, email, password, rights ) VALUES ('{username}', '{email}', '{password}', '{rights}')";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@Username", username },
+                new string[] { "@Email", email },
+                new string[] { "@Password", password },
+                new string[] { "@Rights", rights }
 
-            sqlConnection.ExecuteSearchQuery(query);
+            };
+
+            var query = $"INSERT INTO users(username, email, password, rights ) VALUES (@Username, @Email, @Password, @Rights)";
+
+            sqlConnection.ExecuteSearchQueryParameters(query, param);
 
             //string result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games ORDER BY title");
 
@@ -24,9 +35,16 @@ namespace DataAccessLayer
 
         public AccountModelDTO LoginUser(string username, string password)
         {
-            var query = $"SELECT * from users WHERE username = '{username}' AND password = '{password}'";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@Username", username },
+                new string[] { "@Password", password }
 
-            var result = sqlConnection.ExecuteSearchQuery(query);
+            };
+
+            var query = $"SELECT * from users WHERE username = @Username AND password = @Password";
+
+            var result = sqlConnection.ExecuteSearchQueryParameters(query, param);
 
             return ConvertQueryResultIntoAccountModelDTO(result);
         }
