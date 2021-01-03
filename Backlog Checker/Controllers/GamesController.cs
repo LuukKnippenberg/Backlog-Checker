@@ -43,12 +43,6 @@ namespace Backlog_Checker.Controllers
             }            
         }
 
-        [HttpPost]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Game(int gameId)
         {
@@ -71,6 +65,7 @@ namespace Backlog_Checker.Controllers
             gamesManager.DeleteGame(gameId, rights, Convert.ToInt32(userId));
         }
 
+        [HttpGet]
         public IActionResult Compare()
         {
             return View();
@@ -112,7 +107,7 @@ namespace Backlog_Checker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(GamesModelDTO model, int id)
+        public IActionResult Edit(GamesModelDTO model)
         {
              int? userId = HttpContext.Session.GetInt32("userId");
             GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));

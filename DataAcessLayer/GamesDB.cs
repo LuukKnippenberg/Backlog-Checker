@@ -73,7 +73,7 @@ namespace DataAccessLayer
             return gamesModel;
         }
 
-        public void ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId) //50% DONE
+        public void ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
         {
             if (!IfRelationExistsBetweenGameAndUser(userId, gameId))
             {
@@ -167,7 +167,7 @@ namespace DataAccessLayer
             return;
         }
 
-        public List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult)
+        private List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult)
         {
             List<GamesModelDTO> gamesList = new List<GamesModelDTO>();
 
