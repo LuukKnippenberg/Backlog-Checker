@@ -10,6 +10,21 @@ namespace DataAccessLayer
     {
         private SqlConnection sqlConnection = new SqlConnection();
 
+        public AccountModelDTO GetAccountData(int id)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@Id", id.ToString() }
+
+            };
+
+            var query = $"SELECT * FROM users WHERE id = @Id";
+
+            AccountModelDTO accountModel = ConvertQueryResultIntoAccountModelDTO(sqlConnection.ExecuteSearchQueryParameters(query, param));
+
+            return accountModel;
+        }
+
         public void RegisterAccount(string username, string email, string password)
         {
 
