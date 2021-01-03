@@ -9,9 +9,7 @@ namespace DataAccessLayer
     public class GamesDB
     {
         private SqlConnection sqlConnection = new SqlConnection();
-
-        //TODO SQL INJECTION
-        public List<GamesModelDTO> GetAllGames(int userId) //DONE
+        public List<GamesModelDTO> GetAllGames(int userId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -25,7 +23,7 @@ namespace DataAccessLayer
             return ConvertQueryResultsIntoRows(result);
         }
 
-        public List<GamesModelDTO> GetGamesForUserById(int userId) //DONE
+        public List<GamesModelDTO> GetGamesForUserById(int userId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -39,7 +37,7 @@ namespace DataAccessLayer
             return ConvertQueryResultsIntoRows(gamesByUserId);
         }
 
-        public List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue) //DONE
+        public List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -54,7 +52,7 @@ namespace DataAccessLayer
             return ConvertQueryResultsIntoRows(gamesByUserId);
         }
 
-        public GamesModelDTO GetSingleGame(int id) //DONE
+        public GamesModelDTO GetSingleGame(int id)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -101,12 +99,11 @@ namespace DataAccessLayer
             };
 
             var query = $"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = @UserId AND game_id = @GameId";
-            //var query = $"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = '{userId}' AND game_id = '{gameId}'";
 
             sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
-        public void AddGame(string title, string description, string headerUrl) //DONE
+        public void AddGame(string title, string description, string headerUrl)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -123,7 +120,7 @@ namespace DataAccessLayer
             return;
         }
 
-        public void DeleteGame(int gameId) //DONE
+        public void DeleteGame(int gameId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -137,7 +134,7 @@ namespace DataAccessLayer
             return;
         }
 
-        public void DeleteGameUserLink(int gameId, int userId) //DONE
+        public void DeleteGameUserLink(int gameId, int userId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -152,7 +149,7 @@ namespace DataAccessLayer
             return;
         }
 
-        public void EditGame(int gameId, string title, string description, string headerUrl) //NOT DONE
+        public void EditGame(int gameId, string title, string description, string headerUrl) //NOT DONE GET GAMEID somehow
         {
             List<string[]> param = new List<string[]>()
             {
@@ -170,7 +167,7 @@ namespace DataAccessLayer
             return;
         }
 
-        public List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult) //NOT DONE
+        public List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult)
         {
             List<GamesModelDTO> gamesList = new List<GamesModelDTO>();
 
@@ -201,7 +198,7 @@ namespace DataAccessLayer
             return gamesList;
         }
 
-        private bool ConvertStringBoolIntoNumericalBool(string boolString) //NOT DONE
+        private bool ConvertStringBoolIntoNumericalBool(string boolString)
         {
             if(boolString == "" || boolString is null)
             {
@@ -214,11 +211,17 @@ namespace DataAccessLayer
             
         }
 
-        private bool IfRelationExistsBetweenGameAndUser(int userId, int gameId) //NOT DONE
+        private bool IfRelationExistsBetweenGameAndUser(int userId, int gameId)
         {
-            var query = $"SELECT * FROM users_games WHERE user_id = '{userId}' AND game_id = '{gameId}'";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@UserId", userId.ToString()},
+                new string[] { "@GameId", gameId.ToString()},
+            };
 
-            var result = sqlConnection.ExecuteSearchQuery(query);
+            var query = $"SELECT * FROM users_games WHERE user_id = @UserId AND game_id = @GameId";
+
+            var result = sqlConnection.ExecuteSearchQueryParameters(query, param);
 
             if (result.Count != 0)
             {
@@ -230,11 +233,17 @@ namespace DataAccessLayer
             }
         }
         
-        private void CreateRelationBetweenGameAndUser(int userId, int gameId) //NOT DONE
+        private void CreateRelationBetweenGameAndUser(int userId, int gameId)
         {
-            var query = $"INSERT INTO users_games(game_id, user_id, interested, completed, owned) VALUES ('{gameId}', '{userId}', '', '', '')";
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@UserId", userId.ToString()},
+                new string[] { "@GameId", gameId.ToString()},
+            };
 
-            sqlConnection.ExecuteNonSearchQuery(query);
+            var query = $"INSERT INTO users_games(game_id, user_id, interested, completed, owned) VALUES (@GameId, @UserId, '', '', '')";
+
+            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
 
             return;
 
