@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAcessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Interface\Interfaces.csproj" />
     <ProjectReference Include="..\LogicLayer\LogicLayer.csproj" />
     <ProjectReference Include="..\ModelsDTO\ModelsDTO.csproj" />
   </ItemGroup>

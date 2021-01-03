@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayer", "LogicLayer\Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsDTO", "ModelsDTO\ModelsDTO.csproj", "{98808EDE-5B2C-4884-A1B7-62A0513020A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Interface.csproj", "{A0745865-A1BC-40D3-8295-AFEC34BB935B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interface\Interfaces.csproj", "{A0745865-A1BC-40D3-8295-AFEC34BB935B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
