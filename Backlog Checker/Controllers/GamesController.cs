@@ -102,7 +102,6 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Edit(int gameId)
         {
-            Console.WriteLine($"gameId: {gameId}");
             int? userId = HttpContext.Session.GetInt32("userId");
 
             GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
@@ -113,18 +112,14 @@ namespace Backlog_Checker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(GamesModelDTO model)
+        public IActionResult Edit(GamesModelDTO model, int id)
         {
-            int gameId = 30; 
-
-            Console.WriteLine($"gameId: {model.Id}");
-
-            int? userId = HttpContext.Session.GetInt32("userId");
+             int? userId = HttpContext.Session.GetInt32("userId");
             GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
 
             gamesManager.EditGame(model.Id, model.Title, model.Description, model.HeaderUrl);
 
-            return RedirectToAction("Game", new { gameId = gameId });
+            return RedirectToAction("Game", new { gameId = model.Id });
         }
 
         public void ToggleOwned(int gameId, string subject)

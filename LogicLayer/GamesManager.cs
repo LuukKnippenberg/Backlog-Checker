@@ -44,9 +44,9 @@ namespace LogicLayer
             return games;
         }
 
-        public GamesModelDTO GetSingleGame(int id)
+        public GamesModelDTO GetSingleGame(int gameId)
         {
-            return gamesDB.GetSingleGame(id);
+            return gamesDB.GetSingleGame(gameId);
         }
 
         public void AddGame(string title, string description, string headerUrl)

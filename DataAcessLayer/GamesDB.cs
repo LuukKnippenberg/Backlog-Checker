@@ -56,12 +56,12 @@ namespace DataAccessLayer
         {
             List<string[]> param = new List<string[]>()
             {
-                new string[] { "@id", id.ToString() }
+                new string[] { "@Id", id.ToString() }
             };
 
             GamesModelDTO gamesModel = new GamesModelDTO();
 
-            var query = "select * FROM games WHERE id = @id";
+            var query = "select * FROM games WHERE id = @Id";
 
             List<string> resultStringList = sqlConnection.ExecuteSearchQueryParameters(query, param);
 
