@@ -30,9 +30,9 @@ namespace LogicLayer
             }
         }
 
-        public void GetAccountData(int userId)
+        public AccountModelDTO GetAccountData(int userId)
         {
-
+            return accountsDB.GetAccountData(userId);
         }
 
         public Account ReturnLoggedInUserData()

@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using DataAccessLayer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
+using ModelsDTO;
 
 namespace Backlog_Checker.Controllers
 {
@@ -65,9 +66,16 @@ namespace Backlog_Checker.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Profile()
         {
-            return View();
+            int? userId = HttpContext.Session.GetInt32("userId");
+
+            AccountsManager accountsManager = new AccountsManager();
+
+            AccountModelDTO accountModel = accountsManager.GetAccountData(Convert.ToInt32(userId));
+
+            return View(accountModel);
         }
 
         public IActionResult Settings()

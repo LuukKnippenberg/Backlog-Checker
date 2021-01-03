@@ -1,4 +1,19 @@
-﻿@page
-@model Backlog_Checker.Views.Account.ProfileModel
-@{
-}
+﻿@model ModelsDTO.AccountModelDTO
+
+<h1>My Profile</h1>
+
+<div class="detail flex-col">
+    <div class="block">
+        <div class="featured-game">
+            <div class="content">
+                <div class="container">
+                    <h1 class="title">Name</h1>
+                    
+                    <p>@Model.Username</p>
+                    <h1 class="title">Email</h1>
+                    <p>@Model.Email</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,10 +3,11 @@ using ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Interfaces;
 
 namespace LogicLayer
 {
-    public class GamesManager
+    public class GamesManager : IGamesManagerDB
     {
         private readonly GamesDB gamesDB = new GamesDB();
         private List<Game> games = new List<Game>();
@@ -44,9 +45,9 @@ namespace LogicLayer
             return games;
         }
 
-        public GamesModelDTO GetSingleGame(int id)
+        public GamesModelDTO GetSingleGame(int gameId)
         {
-            return gamesDB.GetSingleGame(id);
+            return gamesDB.GetSingleGame(gameId);
         }
 
         public void AddGame(string title, string description, string headerUrl)
@@ -67,9 +68,9 @@ namespace LogicLayer
             
         }
 
-        public void EditGame(int gameId)
+        public void EditGame(int gameId, string title, string description, string headerUrl)
         {
-            gamesDB.EditGame(gameId);
+            gamesDB.EditGame(gameId, title, description, headerUrl);
         }
 
         public void ToggleUserGameRelation(int gameId, string subject, int userId)

@@ -81,6 +81,41 @@ namespace DataAcessLayer
             return results;
         }
 
+        public List<List<string>> ExecuteSearchQueryWithListReturnParameters(string query, List<string[]> parameters)
+        {
+            List<List<string>> results = new List<List<string>>();
+            MySqlConnection cnn = CreateConnection();
+            MySqlCommand cmd = GenerateCommand(query, cnn);
+            cmd = AddParameters(cmd, parameters);
+            cnn.Open();
+
+            try
+            {
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) //1 x per row
+                {
+                    List<string> tempList = new List<string>();
+
+                    for (int i = 0; i < reader.FieldCount; i++) // 1 x per column
+                    {
+                        tempList.Add(reader[i].ToString());
+                    }
+
+                    results.Add(tempList);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                cnn.Close();
+            }
+
+
+            cnn.Close();
+
+            return results;
+        }
+
         public List<string> ExecuteSearchQueryParameters(string query, List<string[]> parameters)
         {
             List<string> readerResults = new List<string>();

@@ -43,12 +43,6 @@ namespace Backlog_Checker.Controllers
             }            
         }
 
-        [HttpPost]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Game(int gameId)
         {
@@ -71,6 +65,7 @@ namespace Backlog_Checker.Controllers
             gamesManager.DeleteGame(gameId, rights, Convert.ToInt32(userId));
         }
 
+        [HttpGet]
         public IActionResult Compare()
         {
             return View();
@@ -102,7 +97,6 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Edit(int gameId)
         {
-            Console.WriteLine($"gameId: {gameId}");
             int? userId = HttpContext.Session.GetInt32("userId");
 
             GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
@@ -113,14 +107,14 @@ namespace Backlog_Checker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string title, string description, string headerUrl)
+        public IActionResult Edit(GamesModelDTO model)
         {
-            int? userId = HttpContext.Session.GetInt32("userId");
+             int? userId = HttpContext.Session.GetInt32("userId");
             GamesManager gamesManager = new GamesManager(Convert.ToInt32(userId));
 
-            gamesManager.EditGame(id);
+            gamesManager.EditGame(model.Id, model.Title, model.Description, model.HeaderUrl);
 
-            return RedirectToAction("Game", new { gameId = id });
+            return RedirectToAction("Game", new { gameId = model.Id });
         }
 
         public void ToggleOwned(int gameId, string subject)

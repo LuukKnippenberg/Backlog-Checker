@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DataAccessLayer;
+using Interfaces;
 
 namespace LogicLayer
 {
-    public class Game
+    public class Game : IGameDB
     {
         public int Id { private set; get; }
         public string Title { private set; get; }
@@ -34,6 +35,16 @@ namespace LogicLayer
             HoursPlayed = gameDTO.HoursPlayed;
             Genres = gameDTO.Genres;
             HeaderUrl = gameDTO.HeaderUrl;
+        }
+
+        public void DeleteGame(GamesDB gamesDb)
+        {
+            gamesDb.DeleteGame(Id);
+        }
+
+        public void EditGame()
+        {
+            //TODO
         }
 
         public void ToggleUserGameRelation(string subject, int userId)
