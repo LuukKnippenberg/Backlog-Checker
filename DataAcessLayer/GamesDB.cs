@@ -159,9 +159,9 @@ namespace DataAccessLayer
                 gamesModelTemp.Title = row[1];
                 gamesModelTemp.Description = row[2];
                 gamesModelTemp.HeaderUrl = row[3];
-                gamesModelTemp.Owned = Convert.ToBoolean(row[4]);
-                gamesModelTemp.Completed = Convert.ToBoolean(row[5]);
-                gamesModelTemp.Interested = Convert.ToBoolean(row[6]);
+                gamesModelTemp.Owned = row[4] == "" ? false : Convert.ToBoolean(row[4]);
+                gamesModelTemp.Completed = row[5] == "" ? false : Convert.ToBoolean(row[5]);
+                gamesModelTemp.Interested = row[6] == "" ? false : Convert.ToBoolean(row[6]);
 
                 gamesList.Add(gamesModelTemp);
             }
