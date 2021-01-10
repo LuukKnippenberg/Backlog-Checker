@@ -1,5 +1,4 @@
-﻿using DataAccessLayer;
-using ModelsDTO;
+﻿using ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +8,14 @@ namespace LogicLayer
 {
     public class GamesManager
     {
-        private readonly IGamesManagerDB gamesDB = new GamesDB();
-
+        IGamesManagerDB gamesDB;
+        
+        public GamesManager()
+        {
+            Factory factory = new Factory();
+            gamesDB = factory.GetGamesManagerDB("release");
+        }
+        
         public List<Game> GetGamesForUserById(int userId)
         {
             var games = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(userId));

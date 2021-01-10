@@ -73,7 +73,7 @@ namespace DataAccessLayer
             return gamesModel;
         }
 
-        public void ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
+        public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
         {
             if (!IfRelationExistsBetweenGameAndUser(userId, gameId))
             {
@@ -90,10 +90,10 @@ namespace DataAccessLayer
 
             var query = $"UPDATE users_games SET {fieldToUpdate} = @UpdateWith WHERE user_id = @UserId AND game_id = @GameId";
 
-            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
+            return sqlConnection.ExecuteNonSearchQueryParameters(query, param);            
         }
 
-        public void AddGame(GamesModelDTO gamesModelDTO)
+        public bool AddGame(GamesModelDTO gamesModelDTO)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -105,12 +105,10 @@ namespace DataAccessLayer
 
             var query = $"INSERT INTO games(title, description, headerUrl ) VALUES (@Title, @Description, @HeaderUrl)";
 
-            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
-
-            return;
+            return sqlConnection.ExecuteNonSearchQueryParameters(query, param);  
         }
 
-        public void DeleteGame(int gameId)
+        public bool  DeleteGame(int gameId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -119,12 +117,10 @@ namespace DataAccessLayer
 
             var query = $"DELETE FROM games WHERE id = @GameId";
 
-            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
-
-            return;
+            return sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
-        public void DeleteGameUserLink(int gameId, int userId)
+        public bool DeleteGameUserLink(int gameId, int userId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -134,12 +130,10 @@ namespace DataAccessLayer
 
             var query = $"DELETE FROM users_games WHERE game_id = @GameId AND user_id = @UserId";
 
-            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
-
-            return;
+            return sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
-        public void EditGame(GamesModelDTO gamesModelDTO) //NOT DONE GET GAMEID somehow
+        public bool EditGame(GamesModelDTO gamesModelDTO)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -150,11 +144,8 @@ namespace DataAccessLayer
             };
 
             var query = ($"UPDATE games SET title = @Title, description = @Description, headerUrl = @HeaderUrl WHERE id = @GameId");
-            //var query = ($"SELECT * FROM games where id = {gameId}");
 
-            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
-
-            return;
+            return sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
         private List<GamesModelDTO> ConvertQueryResultsIntoRows(List<List<string>> queryResult)
@@ -213,7 +204,7 @@ namespace DataAccessLayer
             }
         }
 
-        private void CreateRelationBetweenGameAndUser(int userId, int gameId)
+        private bool CreateRelationBetweenGameAndUser(int userId, int gameId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -223,10 +214,7 @@ namespace DataAccessLayer
 
             var query = $"INSERT INTO users_games(game_id, user_id, interested, completed, owned) VALUES (@GameId, @UserId, '', '', '')";
 
-            sqlConnection.ExecuteNonSearchQueryParameters(query, param);
-
-            return;
-
+            return sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
     }

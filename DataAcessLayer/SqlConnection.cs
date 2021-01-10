@@ -161,7 +161,7 @@ namespace DataAccessLayer
             cnn.Close();
         }
 
-        public void ExecuteNonSearchQueryParameters(string query, List<string[]> parameters)
+        public bool ExecuteNonSearchQueryParameters(string query, List<string[]> parameters)
         {
             MySqlConnection cnn = CreateConnection();
             MySqlCommand cmd = GenerateCommand(query, cnn);
@@ -170,12 +170,14 @@ namespace DataAccessLayer
             try
             {
                 cmd.ExecuteNonQuery();
+                cnn.Close();
+                return true;
             }
             catch
             {
                 cnn.Close();
+                return false;
             }
-            cnn.Close();
         }
 
         public List<string> ExecuteGetStringQuery(string query)

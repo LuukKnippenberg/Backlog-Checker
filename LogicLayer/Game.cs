@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using DataAccessLayer;
 using Interfaces.Game;
 
 namespace LogicLayer
 {
     public class Game
     {
-        IGamesDB gamesDB = new GamesDB();
+        IGamesDB gamesDB;
 
         public int Id { set; get; }
         public string Title { set; get; }
@@ -39,6 +38,9 @@ namespace LogicLayer
             HoursPlayed = gameDTO.HoursPlayed;
             //Genres = gameDTO.Genres;
             HeaderUrl = gameDTO.HeaderUrl;
+
+            Factory factory = new Factory();
+            gamesDB = factory.GetGamesDB("release");
         }
 
         public Game()
@@ -46,44 +48,40 @@ namespace LogicLayer
 
         }
 
-        public void DeleteGame(string rights, int userId)
+        public bool DeleteGame(string rights, int userId)
         {
             if (rights == "admin")
             {
-                gamesDB.DeleteGame(Id);
+                return gamesDB.DeleteGame(Id);
             }
             else
             {
-                gamesDB.DeleteGameUserLink(Id, userId);
+                return gamesDB.DeleteGameUserLink(Id, userId);
             }
 
         }
 
-        public void UpdateGame()
+        public bool UpdateGame()
         {
-            gamesDB.EditGame(CreateDTO());
+            return gamesDB.EditGame(CreateDTO());
         }
 
-        public void ToggleUserGameRelation(string subject, int userId)
+        public bool  ToggleUserGameRelation(string subject, int userId)
         {
-            GamesDB gamesDB = new GamesDB();
-
             switch (subject)
             {
                 case "owned":
                     Owned = !Owned;
-                    gamesDB.ToggleUserGameRelation(Id, Owned, subject, userId);
-                    break;
+                    return gamesDB.ToggleUserGameRelation(Id, Owned, subject, userId);
                 case "completed":
                     Completed = !Completed;
-                    gamesDB.ToggleUserGameRelation(Id, Completed, subject, userId);
-                    break;
+                    return gamesDB.ToggleUserGameRelation(Id, Completed, subject, userId); 
                 case "interested":
                     Interested = !Interested;
-                    gamesDB.ToggleUserGameRelation(Id, Interested, subject, userId);
-                    break;
-
+                    return gamesDB.ToggleUserGameRelation(Id, Interested, subject, userId);
             }
+
+            return false;
         }
 
         private GamesModelDTO CreateDTO()

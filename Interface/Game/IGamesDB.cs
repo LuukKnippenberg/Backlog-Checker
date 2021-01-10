@@ -5,9 +5,9 @@ namespace Interfaces.Game
 {
     public interface IGamesDB
     {
-        void DeleteGame(int gameId);
-        void DeleteGameUserLink(int gameId, int userId);
-        void EditGame(GamesModelDTO gamesModelDTO);
-        void ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId);
+        bool DeleteGame(int gameId);
+        bool DeleteGameUserLink(int gameId, int userId);
+        bool EditGame(GamesModelDTO gamesModelDTO);
+        bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId);
     }
 }

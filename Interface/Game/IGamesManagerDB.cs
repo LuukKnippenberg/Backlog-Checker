@@ -7,7 +7,7 @@ namespace Interfaces.Game
 {
     public interface IGamesManagerDB
     {
-        void AddGame(GamesModelDTO gamesModelDTO);
+        bool AddGame(GamesModelDTO gamesModelDTO);
         List<GamesModelDTO> GetAllGames(int userId);
         List<GamesModelDTO> GetGamesForUserById(int userId);
         List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue);
