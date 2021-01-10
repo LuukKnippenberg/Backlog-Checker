@@ -17,7 +17,7 @@ namespace LogicLayer
         public bool Owned { set; get; }
         public bool Completed { set; get; }
         public bool Interested { set; get; }
-        public float HoursPlayed { set; get; }
+        public TimeSpan HoursPlayed { set; get; }
         public string HeaderUrl { set; get; }
 
         /*

@@ -25,7 +25,7 @@ namespace Backlog_Checker.Controllers
                 List<Game> gamesList;
                 if (sort != null || filter != null)
                 {
-                    gamesList = gamesManager.GetGamesSortedAndOrFiltered(sort, filter, Convert.ToInt32(userId));
+                    gamesList = gamesManager.GetGamesFiltered(filter, Convert.ToInt32(userId));
                 }
                 else
                 {

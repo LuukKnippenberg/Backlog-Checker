@@ -13,7 +13,7 @@ namespace ModelsDTO
         public bool Owned { get; set; }
         public bool Completed { get; set; }
         public bool Interested { get; set; }
-        public float HoursPlayed { get; set; }
+        public TimeSpan HoursPlayed { get; set; }
         public List<string> Genres { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace LogicLayer
             return games;
         }
 
-        public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter, int userId)
+        public List<Game> GetGamesFiltered(string filter, int userId)
         {
             List<Game> filteredList;
 

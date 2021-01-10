@@ -9,7 +9,7 @@ namespace LogicLayer
     public class AccountsManager
     {
         private readonly AccountsDB accountsDB = new AccountsDB();
-        private Account CurrentlyLoggedInAccount;
+        private Account currentlyLoggedInAccount;
 
         public void RegisterAccount(string username, string email, string password)
         {
@@ -18,9 +18,9 @@ namespace LogicLayer
 
         public bool LoginAccount(string username, string password)
         {
-            CurrentlyLoggedInAccount = new Account(accountsDB.LoginUser(username, password));
+            currentlyLoggedInAccount = new Account(accountsDB.LoginUser(username, password));
 
-            if (CurrentlyLoggedInAccount.Id == 0)
+            if (currentlyLoggedInAccount.Id == 0)
             {
                 return false;
             }
@@ -37,12 +37,7 @@ namespace LogicLayer
 
         public Account ReturnLoggedInUserData()
         {
-            return CurrentlyLoggedInAccount;
-        }
-
-        public void LogOutUser()
-        {
-
+            return currentlyLoggedInAccount;
         }
     }
 }
