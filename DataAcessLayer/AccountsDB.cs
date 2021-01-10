@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Interfaces.Account;
 
 namespace DataAccessLayer
 {
-    public class AccountsDB
+    public class AccountsDB : IAccountsDB
     {
         private SqlConnection sqlConnection = new SqlConnection();
 
@@ -24,10 +25,8 @@ namespace DataAccessLayer
             return accountModel;
         }
 
-        public void RegisterAccount(string username, string email, string password)
+        public bool RegisterAccount(string username, string email, string password)
         {
-
-
             const string rights = "user";
 
             List<string[]> param = new List<string[]>()
@@ -41,9 +40,7 @@ namespace DataAccessLayer
 
             var query = $"INSERT INTO users(username, email, password, rights ) VALUES (@Username, @Email, @Password, @Rights)";
 
-            sqlConnection.ExecuteSearchQueryParameters(query, param);
-
-            //string result = sqlConnection.ExecuteSearchQueryWithListReturn("SELECT * FROM games ORDER BY title");
+            return sqlConnection.ExecuteNonSearchQueryParameters(query, param);
 
         }
 
@@ -67,7 +64,7 @@ namespace DataAccessLayer
         {
             AccountModelDTO model = new AccountModelDTO();
 
-            if(queryResult.Count !=  0)
+            if (queryResult.Count != 0)
             {
                 model.Id = Convert.ToInt32(queryResult[0]);
                 model.Username = queryResult[1];

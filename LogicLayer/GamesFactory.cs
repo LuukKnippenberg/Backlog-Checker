@@ -7,9 +7,9 @@ using DataAccessLayerTest;
 
 namespace LogicLayer
 {
-    public class Factory
+    public static class GamesFactory
     {
-        public IGamesDB GetGamesDB(string source)
+        public static IGamesDB GetGamesDB(string source)
         {
             switch (source.ToLower())
             {
@@ -22,7 +22,7 @@ namespace LogicLayer
             }
         }
 
-        public IGamesManagerDB GetGamesManagerDB(string source)
+        public static IGamesManagerDB GetGamesManagerDB(string source)
         {
             switch (source.ToLower())
             {
