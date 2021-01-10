@@ -6,14 +6,14 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 
-namespace DataAcessLayer
+namespace DataAccessLayer
 {
     public class SqlConnection
     {
         private static MySqlConnection CreateConnection()
         {
             MySqlConnection cnn;
-            string connectionString = $"server=185.182.57.39;uid=luukkpj318_backlogchecker;pwd=Fontys123!;database=luukkpj318_backlogchecker;";
+            string connectionString = $"server=185.182.57.39;uid=luukkpj318_backlogchecker;pwd=Fontys123!;database=luukkpj318_backlogchecker;Treat Tiny As Boolean=true";
             cnn = new MySqlConnection(connectionString);
             return cnn;
         }
@@ -140,6 +140,7 @@ namespace DataAcessLayer
                 Console.WriteLine(ex.ToString());
                 cnn.Close();
             }
+            cnn.Close();
             return readerResults;
         }
 
@@ -157,6 +158,7 @@ namespace DataAcessLayer
                 Console.WriteLine(ex.ToString());
                 cnn.Close();
             }
+            cnn.Close();
         }
 
         public void ExecuteNonSearchQueryParameters(string query, List<string[]> parameters)
@@ -173,6 +175,7 @@ namespace DataAcessLayer
             {
                 cnn.Close();
             }
+            cnn.Close();
         }
 
         public List<string> ExecuteGetStringQuery(string query)
@@ -201,6 +204,7 @@ namespace DataAcessLayer
             {
                 cnn.Close();
             }
+            cnn.Close();
             return readerResults;
         }
 

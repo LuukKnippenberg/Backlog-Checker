@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Interfaces
+namespace Interfaces.Game
 {
     public interface IGamesManagerDB
     {
-        GamesModelDTO GetSingleGame(int gameId);
-        void DeleteGame(int gameId, string rights, int userId);
-        void EditGame(int gameId, string title, string description, string headerUrl);
-        void ToggleUserGameRelation(int gameId, string subject, int userId);
+        void AddGame(GamesModelDTO gamesModelDTO);
+        List<GamesModelDTO> GetAllGames(int userId);
+        List<GamesModelDTO> GetGamesForUserById(int userId);
+        List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue);
+        GamesModelDTO GetSingleGame(int id);
     }
 }

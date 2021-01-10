@@ -3,26 +3,30 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DataAccessLayer;
-using Interfaces;
+using Interfaces.Game;
 
 namespace LogicLayer
 {
-    public class Game : IGameDB
+    public class Game
     {
-        public int Id { private set; get; }
-        public string Title { private set; get; }
-        public string Description { private set; get; }
-        public bool Owned { private set; get; }
-        public bool Completed { private set; get; }
-        public bool Interested { private set; get; }
-        public float HoursPlayed { private set; get; }
-        public string HeaderUrl { private set; get; }
+        IGamesDB gamesDB = new GamesDB();
 
+        public int Id { set; get; }
+        public string Title { set; get; }
+        public string Description { set; get; }
+        public bool Owned { set; get; }
+        public bool Completed { set; get; }
+        public bool Interested { set; get; }
+        public float HoursPlayed { set; get; }
+        public string HeaderUrl { set; get; }
+
+        /*
         private List<string> Genres;
         public IReadOnlyCollection<List<string>> ReadonlyGenres
         {
             get { return (IReadOnlyCollection<List<string>>)Genres.AsReadOnly(); }
         }
+        */
 
         public Game(GamesModelDTO gameDTO)
         {
@@ -31,20 +35,33 @@ namespace LogicLayer
             Description = gameDTO.Description;
             Owned = gameDTO.Owned;
             Completed = gameDTO.Completed;
-            Interested = gameDTO.interested;
+            Interested = gameDTO.Interested;
             HoursPlayed = gameDTO.HoursPlayed;
-            Genres = gameDTO.Genres;
+            //Genres = gameDTO.Genres;
             HeaderUrl = gameDTO.HeaderUrl;
         }
 
-        public void DeleteGame(GamesDB gamesDb)
+        public Game()
         {
-            gamesDb.DeleteGame(Id);
+
         }
 
-        public void EditGame()
+        public void DeleteGame(string rights, int userId)
         {
-            //TODO
+            if (rights == "admin")
+            {
+                gamesDB.DeleteGame(Id);
+            }
+            else
+            {
+                gamesDB.DeleteGameUserLink(Id, userId);
+            }
+
+        }
+
+        public void UpdateGame()
+        {
+            gamesDB.EditGame(CreateDTO());
         }
 
         public void ToggleUserGameRelation(string subject, int userId)
@@ -67,6 +84,23 @@ namespace LogicLayer
                     break;
 
             }
+        }
+
+        private GamesModelDTO CreateDTO()
+        {
+            GamesModelDTO gamesModelDTO = new GamesModelDTO()
+            {
+                Id = this.Id,
+                Title = this.Title,
+                Description = this.Description,
+                Owned = this.Owned,
+                Completed = this.Completed,
+                Interested = this.Interested,
+                HoursPlayed = this.HoursPlayed,
+                //Genres = this.Genres,
+                HeaderUrl = this.HeaderUrl,
+            };
+            return gamesModelDTO;
         }
 
     }

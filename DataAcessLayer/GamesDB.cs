@@ -1,12 +1,12 @@
-﻿using DataAcessLayer;
-using ModelsDTO;
+﻿using ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Interfaces.Game;
 
 namespace DataAccessLayer
 {
-    public class GamesDB
+    public class GamesDB : IGamesDB, IGamesManagerDB
     {
         private SqlConnection sqlConnection = new SqlConnection();
         public List<GamesModelDTO> GetAllGames(int userId)
@@ -80,36 +80,26 @@ namespace DataAccessLayer
                 CreateRelationBetweenGameAndUser(userId, gameId);
             }
 
-            string UpdateWithString = Convert.ToString(updateWith);
-            if(UpdateWithString == "True" || UpdateWithString == "true")
-            {
-                UpdateWithString = "1";
-            }
-            else if(UpdateWithString == "False" || UpdateWithString == "false")
-            {
-                UpdateWithString = "0";
-            }
-
             List<string[]> param = new List<string[]>()
             {
-                new string[] { "@GameId", gameId.ToString() },
-                new string[] { "@UpdateWith", UpdateWithString },
                 new string[] { "@FieldToUpdate", fieldToUpdate },
-                new string[] { "@UserId", userId.ToString() }
+                new string[] { "@UpdateWith", Convert.ToInt32(updateWith).ToString() },
+                new string[] { "@UserId", userId.ToString() },
+                new string[] { "@GameId", gameId.ToString() }
             };
 
-            var query = $"UPDATE users_games SET {fieldToUpdate} = b'{UpdateWithString}' WHERE user_id = @UserId AND game_id = @GameId";
+            var query = $"UPDATE users_games SET {fieldToUpdate} = @UpdateWith WHERE user_id = @UserId AND game_id = @GameId";
 
             sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
-        public void AddGame(string title, string description, string headerUrl)
+        public void AddGame(GamesModelDTO gamesModelDTO)
         {
             List<string[]> param = new List<string[]>()
             {
-                new string[] { "@Title", title},
-                new string[] { "@Description", description},
-                new string[] { "@HeaderUrl", headerUrl}
+                new string[] { "@Title", gamesModelDTO.Title},
+                new string[] { "@Description", gamesModelDTO.Description},
+                new string[] { "@HeaderUrl", gamesModelDTO.HeaderUrl}
             };
 
 
@@ -149,14 +139,14 @@ namespace DataAccessLayer
             return;
         }
 
-        public void EditGame(int gameId, string title, string description, string headerUrl) //NOT DONE GET GAMEID somehow
+        public void EditGame(GamesModelDTO gamesModelDTO) //NOT DONE GET GAMEID somehow
         {
             List<string[]> param = new List<string[]>()
             {
-                new string[] { "@GameId", gameId.ToString() },
-                new string[] { "@Title", title },
-                new string[] { "@Description", description },
-                new string[] { "@HeaderUrl", headerUrl },
+                new string[] { "@GameId", gamesModelDTO.Id.ToString() },
+                new string[] { "@Title", gamesModelDTO.Title },
+                new string[] { "@Description", gamesModelDTO.Description },
+                new string[] { "@HeaderUrl", gamesModelDTO.HeaderUrl },
             };
 
             var query = ($"UPDATE games SET title = @Title, description = @Description, headerUrl = @HeaderUrl WHERE id = @GameId");
@@ -178,19 +168,9 @@ namespace DataAccessLayer
                 gamesModelTemp.Title = row[1];
                 gamesModelTemp.Description = row[2];
                 gamesModelTemp.HeaderUrl = row[3];
-
-                if(4 < row.Count)
-                {
-                    gamesModelTemp.Owned = ConvertStringBoolIntoNumericalBool(row[4]);
-                }
-                if(5 < row.Count)
-                {
-                    gamesModelTemp.Completed = ConvertStringBoolIntoNumericalBool(row[5]);
-                }
-                if(6 < row.Count)
-                {
-                    gamesModelTemp.interested = ConvertStringBoolIntoNumericalBool(row[6]);
-                }
+                gamesModelTemp.Owned = Convert.ToBoolean(row[4]);
+                gamesModelTemp.Completed = Convert.ToBoolean(row[5]);
+                gamesModelTemp.Interested = Convert.ToBoolean(row[6]);
 
                 gamesList.Add(gamesModelTemp);
             }
@@ -200,7 +180,7 @@ namespace DataAccessLayer
 
         private bool ConvertStringBoolIntoNumericalBool(string boolString)
         {
-            if(boolString == "" || boolString is null)
+            if (boolString == "" || boolString is null)
             {
                 return false;
             }
@@ -208,7 +188,7 @@ namespace DataAccessLayer
             {
                 return Convert.ToBoolean(Convert.ToInt32(boolString));
             }
-            
+
         }
 
         private bool IfRelationExistsBetweenGameAndUser(int userId, int gameId)
@@ -232,7 +212,7 @@ namespace DataAccessLayer
                 return false;
             }
         }
-        
+
         private void CreateRelationBetweenGameAndUser(int userId, int gameId)
         {
             List<string[]> param = new List<string[]>()

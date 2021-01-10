@@ -12,7 +12,7 @@ namespace ModelsDTO
         public string HeaderUrl { get; set; }
         public bool Owned { get; set; }
         public bool Completed { get; set; }
-        public bool interested { get; set; }
+        public bool Interested { get; set; }
         public float HoursPlayed { get; set; }
         public List<string> Genres { get; set; }
     }
