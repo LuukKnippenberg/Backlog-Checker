@@ -59,7 +59,15 @@ namespace Backlog_Checker.Controllers
 
             if(password == passwordRepeat)
             {
-                accountsManager.RegisterAccount(username, email, password);
+                try
+                {
+                    accountsManager.RegisterAccount(username, email, password);
+                    return RedirectToAction("Login", "Account");
+                }
+                catch 
+                {
+                    return View();
+                } 
             }
 
             return View();

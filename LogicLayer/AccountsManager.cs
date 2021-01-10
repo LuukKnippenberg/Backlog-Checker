@@ -13,9 +13,9 @@ namespace LogicLayer
         //private readonly AccountsDB accountsDB = new AccountsDB();
         private Account currentlyLoggedInAccount;
 
-        public void RegisterAccount(string username, string email, string password)
+        public bool RegisterAccount(string username, string email, string password)
         {
-            accountsDB.RegisterAccount(username, email, password);
+            return accountsDB.RegisterAccount(username, email, password);
         }
 
         public bool LoginAccount(string username, string password)
