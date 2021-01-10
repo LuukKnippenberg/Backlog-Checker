@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ModelsDTO;
+using Interfaces.Account;
 
 namespace LogicLayer
 {
     public class AccountsManager
     {
-        private readonly AccountsDB accountsDB = new AccountsDB();
+        IAccountsDB accountsDB = AccountFactory.GetAccountsManagerDB("release");
+        //private readonly AccountsDB accountsDB = new AccountsDB();
         private Account currentlyLoggedInAccount;
 
         public void RegisterAccount(string username, string email, string password)

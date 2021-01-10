@@ -8,7 +8,7 @@ namespace LogicLayer
 {
     public class Game
     {
-        IGamesDB gamesDB;
+        IGamesDB gamesDB = GamesFactory.GetGamesDB("release");
 
         public int Id { set; get; }
         public string Title { set; get; }
@@ -38,9 +38,6 @@ namespace LogicLayer
             HoursPlayed = gameDTO.HoursPlayed;
             //Genres = gameDTO.Genres;
             HeaderUrl = gameDTO.HeaderUrl;
-
-            Factory factory = new Factory();
-            gamesDB = factory.GetGamesDB("release");
         }
 
         public Game()

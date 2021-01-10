@@ -8,13 +8,7 @@ namespace LogicLayer
 {
     public class GamesManager
     {
-        IGamesManagerDB gamesDB;
-        
-        public GamesManager()
-        {
-            Factory factory = new Factory();
-            gamesDB = factory.GetGamesManagerDB("release");
-        }
+        IGamesManagerDB gamesDB = GamesFactory.GetGamesManagerDB("release");
         
         public List<Game> GetGamesForUserById(int userId)
         {
