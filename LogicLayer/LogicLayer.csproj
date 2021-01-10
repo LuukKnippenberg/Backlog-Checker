@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayerTest\DataAccessLayerTest.csproj" />
     <ProjectReference Include="..\DataAcessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\Interface\Interfaces.csproj" />
     <ProjectReference Include="..\ModelsDTO\ModelsDTO.csproj" />

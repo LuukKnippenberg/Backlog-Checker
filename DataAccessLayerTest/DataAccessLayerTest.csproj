@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.22" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Interface\Interfaces.csproj" />
     <ProjectReference Include="..\ModelsDTO\ModelsDTO.csproj" />
   </ItemGroup>

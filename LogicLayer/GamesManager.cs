@@ -1,33 +1,28 @@
-﻿using DataAccessLayer;
-using ModelsDTO;
+﻿using ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Interfaces;
+using Interfaces.Game;
 
 namespace LogicLayer
 {
-    public class GamesManager : IGamesManagerDB
+    public class GamesManager
     {
-        private readonly GamesDB gamesDB = new GamesDB();
-        private List<Game> games = new List<Game>();
-        public GamesManager(int userId)
+        IGamesManagerDB gamesDB;
+        
+        public GamesManager()
         {
-            var AllGames = gamesDB.GetAllGames(userId);
-            foreach (GamesModelDTO gamesModel in AllGames)
-            {
-                var game = new Game(gamesModel);
-                games.Add(game);
-            }
+            Factory factory = new Factory();
+            gamesDB = factory.GetGamesManagerDB("release");
         }
-
+        
         public List<Game> GetGamesForUserById(int userId)
         {
-            games = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(userId));
+            var games = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(userId));
             return games;
         }
 
-        public List<Game> GetGamesSortedAndOrFiltered(string sort, string filter, int userId)
+        public List<Game> GetGamesFiltered(string filter, int userId)
         {
             List<Game> filteredList;
 
@@ -40,41 +35,31 @@ namespace LogicLayer
                 filteredList = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserByIdWithFilter(userId, filter, "1"));
             }
 
-            games = filteredList;
-
-            return games;
+            return filteredList;
         }
 
-        public GamesModelDTO GetSingleGame(int gameId)
+        public Game GetSingleGame(int gameId)
         {
-            return gamesDB.GetSingleGame(gameId);
+            Game game = new Game(gamesDB.GetSingleGame(gameId));
+            return game;
         }
 
-        public void AddGame(string title, string description, string headerUrl)
+        public void AddGame(GamesModelDTO gamesModelDTO)
         {
-            gamesDB.AddGame(title, description, headerUrl);
-        }
-
-        public void DeleteGame(int gameId, string rights, int userId) 
-        {
-            if(rights == "admin")
-            {
-                gamesDB.DeleteGame(gameId);
-            }
-            else
-            {
-                gamesDB.DeleteGameUserLink(gameId, userId);
-            }
-            
-        }
-
-        public void EditGame(int gameId, string title, string description, string headerUrl)
-        {
-            gamesDB.EditGame(gameId, title, description, headerUrl);
+            gamesDB.AddGame(gamesModelDTO);
         }
 
         public void ToggleUserGameRelation(int gameId, string subject, int userId)
         {
+           
+            var AllGames = gamesDB.GetAllGames(userId);
+            List<Game> games = new List<Game>();
+            foreach (GamesModelDTO gamesModel in AllGames)
+            {
+                var game = new Game(gamesModel);
+                games.Add(game);
+            }
+            
             foreach (var game in games)
             {
                 if(game.Id == gameId)

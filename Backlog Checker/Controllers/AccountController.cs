@@ -15,7 +15,7 @@ namespace Backlog_Checker.Controllers
 {
     public class AccountController : Controller
     {
-        
+        AccountsManager accountsManager = new AccountsManager();
 
         public IActionResult Index()
         {
@@ -31,7 +31,6 @@ namespace Backlog_Checker.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            AccountsManager accountsManager = new AccountsManager();
 
             if(accountsManager.LoginAccount(username, password))
             {
@@ -70,8 +69,6 @@ namespace Backlog_Checker.Controllers
         public IActionResult Profile()
         {
             int? userId = HttpContext.Session.GetInt32("userId");
-
-            AccountsManager accountsManager = new AccountsManager();
 
             AccountModelDTO accountModel = accountsManager.GetAccountData(Convert.ToInt32(userId));
 
