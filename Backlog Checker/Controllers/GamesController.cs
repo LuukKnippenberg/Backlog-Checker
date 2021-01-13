@@ -62,11 +62,10 @@ namespace Backlog_Checker.Controllers
 
         public void DeleteGame(int gameId)
         {
-            Game game = gamesManager.GetSingleGame(gameId);
             string rights = HttpContext.Session.GetString("rights");
             int? userId = HttpContext.Session.GetInt32("userId");
 
-            game.DeleteGame(rights, Convert.ToInt32(userId));
+            gamesManager.DeleteGame(rights, Convert.ToInt32(userId), gameId);
         }
 
         [HttpGet]

@@ -3,17 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Interfaces.Game;
+using FactoryLayer;
 
 namespace LogicLayer
 {
     public class GamesManager
     {
         IGamesManagerDB gamesDB = GamesFactory.GetGamesManagerDB("release");
-        
         public List<Game> GetGamesForUserById(int userId)
         {
-            var games = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(userId));
-            return games;
+            return ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(userId)); ;
         }
 
         public List<Game> GetGamesFiltered(string filter, int userId)
@@ -73,6 +72,19 @@ namespace LogicLayer
                 gamesTemp.Add(game);
             }
             return gamesTemp;
+        }
+
+        public bool DeleteGame(string rights, int userId, int gameId)
+        {
+            if (rights == "admin")
+            {
+                return gamesDB.DeleteGame(gameId);
+            }
+            else
+            {
+                return gamesDB.DeleteGameUserLink(gameId, userId);
+            }
+
         }
     }
 }
