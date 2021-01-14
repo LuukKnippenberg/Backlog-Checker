@@ -52,11 +52,11 @@ namespace DataAccessLayer
             return ConvertQueryResultsIntoRows(gamesByUserId);
         }
 
-        public GamesModelDTO GetSingleGame(int id)
+        public GamesModelDTO GetSingleGame(int gameId)
         {
             List<string[]> param = new List<string[]>()
             {
-                new string[] { "@Id", id.ToString() }
+                new string[] { "@Id", gameId.ToString() }
             };
 
             GamesModelDTO gamesModel = new GamesModelDTO();

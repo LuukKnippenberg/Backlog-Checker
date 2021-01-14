@@ -10,6 +10,17 @@ namespace LogicLayer
     public class GamesManager
     {
         IGamesManagerDB gamesDB = GamesFactory.GetGamesManagerDB("release");
+
+        public GamesManager()
+        {
+
+        }
+
+        public GamesManager(string DatabaseSource)
+        {
+            gamesDB = GamesFactory.GetGamesManagerDB(DatabaseSource);
+        }
+
         public List<Game> GetGamesForUserById(int userId)
         {
             return ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserById(userId)); ;
@@ -21,14 +32,12 @@ namespace LogicLayer
 
             if(filter == "all")
             {
-                filteredList = ConvertModelDTOIntoGenericGameList(gamesDB.GetAllGames(userId));
+                return ConvertModelDTOIntoGenericGameList(gamesDB.GetAllGames(userId));
             }
             else
             {
-                filteredList = ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserByIdWithFilter(userId, filter, "1"));
+                return ConvertModelDTOIntoGenericGameList(gamesDB.GetGamesForUserByIdWithFilter(userId, filter, "1"));
             }
-
-            return filteredList;
         }
 
         public Game GetSingleGame(int gameId)
@@ -37,12 +46,20 @@ namespace LogicLayer
             return game;
         }
 
-        public void AddGame(GamesModelDTO gamesModelDTO)
+        public bool AddGame(GamesModelDTO gamesModelDTO)
         {
-            gamesDB.AddGame(gamesModelDTO);
+            if (gamesDB.AddGame(gamesModelDTO))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
-        public void ToggleUserGameRelation(int gameId, string subject, int userId)
+        public bool ToggleUserGameRelation(int gameId, string subject, int userId)
         {
            
             var AllGames = gamesDB.GetAllGames(userId);
@@ -57,9 +74,15 @@ namespace LogicLayer
             {
                 if(game.Id == gameId)
                 {
-                    game.ToggleUserGameRelation(subject, userId);
+                    if(game.ToggleUserGameRelation(subject, userId))
+                    {
+                        return true;
+                    }
+                    
                 }
             }
+
+            return false;
         }
 
         private List<Game> ConvertModelDTOIntoGenericGameList(List<GamesModelDTO> gamesModelDTO)

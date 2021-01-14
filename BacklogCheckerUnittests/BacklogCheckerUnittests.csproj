@@ -49,11 +49,22 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameTest.cs" />
+    <Compile Include="Games\GameTest.cs" />
+    <Compile Include="Games\GamesManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogicLayer\LogicLayer.csproj">
+      <Project>{d5d694e4-ca05-4d03-b8f9-4670d0a66645}</Project>
+      <Name>LogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelsDTO\ModelsDTO.csproj">
+      <Project>{98808ede-5b2c-4884-a1b7-62a0513020a7}</Project>
+      <Name>ModelsDTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

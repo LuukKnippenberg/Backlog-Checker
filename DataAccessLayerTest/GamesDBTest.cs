@@ -31,12 +31,13 @@ namespace DataAccessLayerTest
         public List<GamesModelDTO> GetAllGames(int userId)
         {
             List<GamesModelDTO> gamesModelList = new List<GamesModelDTO>();
-            GamesModelDTO tempGamesModel = new GamesModelDTO();
-            tempGamesModel.Completed = true;
-            tempGamesModel.Description = "The Description All Games";
-            tempGamesModel.Title = "The Title";
-            tempGamesModel.HeaderUrl = "https://support.steampowered.com/steamvr/Alyx/AlyxBanner.png";
-            int amount = 10;
+            GamesModelDTO tempGamesModel = new GamesModelDTO
+            {
+                Description = "This is the game",
+                Title = "Game title yeah",
+                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+            };
+            int amount = 1;
 
             for (int i = 0; i < amount; i++)
             {
@@ -50,17 +51,22 @@ namespace DataAccessLayerTest
         public List<GamesModelDTO> GetGamesForUserById(int userId)
         {
             List<GamesModelDTO> gamesModelList = new List<GamesModelDTO>();
-            GamesModelDTO tempGamesModel = new GamesModelDTO();
-            tempGamesModel.Completed = true;
-            tempGamesModel.Description = "The Description For User By Id";
-            tempGamesModel.Title = "The Title";
-            tempGamesModel.HeaderUrl = "https://support.steampowered.com/steamvr/Alyx/AlyxBanner.png";
-            int amount = 10;
-
-            for (int i = 0; i < amount; i++)
+            if (userId == 0)
             {
-                tempGamesModel.Id = i;
-                gamesModelList.Add(tempGamesModel);
+                GamesModelDTO tempGamesModel = new GamesModelDTO
+                {
+                    Completed = true,
+                    Description = "The Description For User By Id",
+                    Title = $"The Title",
+                    HeaderUrl = "https://support.steampowered.com/steamvr/Alyx/AlyxBanner.png"
+                };
+                int amount = 10;
+
+                for (int i = 0; i < amount; i++)
+                {
+                    tempGamesModel.Id = i;
+                    gamesModelList.Add(tempGamesModel);
+                }
             }
 
             return gamesModelList;
@@ -69,32 +75,79 @@ namespace DataAccessLayerTest
         public List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue)
         {
             List<GamesModelDTO> gamesModelList = new List<GamesModelDTO>();
-            GamesModelDTO tempGamesModel = new GamesModelDTO();
-            tempGamesModel.Completed = true;
-            tempGamesModel.Description = "The Description For User By Id With Filter";
-            tempGamesModel.Title = "The Title";
-            tempGamesModel.HeaderUrl = "https://support.steampowered.com/steamvr/Alyx/AlyxBanner.png";
-            int amount = 10;
 
-            for (int i = 0; i < amount; i++)
+            if (userId == 0)
             {
-                tempGamesModel.Id = i;
+                GamesModelDTO tempGamesModel = new GamesModelDTO
+                {
+                    Id = 0,
+                    Description = "This is the game",
+                    Title = "Game title yeah",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                };
                 gamesModelList.Add(tempGamesModel);
             }
 
             return gamesModelList;
+
         }
 
         public GamesModelDTO GetSingleGame(int id)
         {
-            GamesModelDTO tempGamesModel = new GamesModelDTO();
-            tempGamesModel.Id = 0;
-            tempGamesModel.Completed = true;
-            tempGamesModel.Description = "The Description For User By Id With Filter";
-            tempGamesModel.Title = "The Title";
-            tempGamesModel.HeaderUrl = "https://support.steampowered.com/steamvr/Alyx/AlyxBanner.png";
+            List<GamesModelDTO> tempGamesModelList = new List<GamesModelDTO>();
+            GamesModelDTO gamesModelToReturn = new GamesModelDTO();
+            GamesModelDTO tempGamesModel = new GamesModelDTO
+            {
+                Description = "This is the game",
+                Title = "Game title yeah",
+                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+            };
+            int amountOfGames = 10;
 
-            return tempGamesModel;
+            for (int i = 0; i < amountOfGames; i++)
+            {
+                tempGamesModel.Id = i;
+                tempGamesModelList.Add(tempGamesModel);
+            }
+
+            foreach (var item in tempGamesModelList)
+            {
+                if(id == item.Id)
+                {
+                    gamesModelToReturn = item;
+                }
+            }
+
+            return gamesModelToReturn;
+        }
+
+        public GamesModelDTO GetSingleGame(int gameId, int userId)
+        {
+            List<GamesModelDTO> tempGamesModelList = new List<GamesModelDTO>();
+            GamesModelDTO gamesModelToReturn = new GamesModelDTO();
+            GamesModelDTO tempGamesModel = new GamesModelDTO
+            {
+                Description = "This is the game",
+                Title = "Game title yeah",
+                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+            };
+            int amountOfGames = 10;
+
+            for (int i = 0; i < amountOfGames; i++)
+            {
+                tempGamesModel.Id = i;
+                tempGamesModelList.Add(tempGamesModel);
+            }
+
+            foreach (var item in tempGamesModelList)
+            {
+                if (gameId == item.Id)
+                {
+                    gamesModelToReturn = item;
+                }
+            }
+
+            return gamesModelToReturn;
         }
 
         public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
