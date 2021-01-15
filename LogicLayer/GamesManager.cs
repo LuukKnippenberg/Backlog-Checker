@@ -120,5 +120,10 @@ namespace LogicLayer
             }
 
         }
+
+        public bool IfGameExists(int gameId)
+        {
+            return gamesDB.IfGameExists(gameId);
+        }
     }
 }

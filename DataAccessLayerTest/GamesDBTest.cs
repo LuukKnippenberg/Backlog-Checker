@@ -129,14 +129,10 @@ namespace DataAccessLayerTest
                 new string[] { "@UserId", userId.ToString() }
             };
 
-            var query = "SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM games INNER JOIN users_games ON games.id = users_games.game_id AND users_games.user_id = @UserId AND games.id = @GameId";
-
             List<string> resultStringList = new List<string>
             {
-                "1",
-                "The title",
-                "The description",
-                "The URL"
+                "test",
+                "test 2"
             };
 
             return new GamesModelDTO
@@ -144,7 +140,10 @@ namespace DataAccessLayerTest
                 Id = Convert.ToInt32(resultStringList[0]),
                 Title = resultStringList[1],
                 Description = resultStringList[2],
-                HeaderUrl = resultStringList[3]
+                HeaderUrl = resultStringList[3],
+                Owned = Convert.ToBoolean(resultStringList[4]),
+                Completed = Convert.ToBoolean(resultStringList[5]),
+                Interested = Convert.ToBoolean(resultStringList[6]),
             };
         }
 
@@ -180,6 +179,18 @@ namespace DataAccessLayerTest
         public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
         {
             return true;
+        }
+
+        public bool IfGameExists(int gameId)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString()}
+            };
+
+            var query = $"SELECT * FROM games WHERE id = @GameId";
+
+            return false;
         }
     }
 }

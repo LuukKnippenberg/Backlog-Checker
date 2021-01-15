@@ -241,5 +241,25 @@ namespace DataAccessLayer
             return sqlConnection.ExecuteNonSearchQueryParameters(query, param);
         }
 
+        public bool IfGameExists(int gameId)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString()}
+            };
+
+            var query = $"SELECT * FROM games WHERE id = @GameId";
+            var result = sqlConnection.ExecuteSearchQueryParameters(query, param);
+
+            if(result.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
     }
 }

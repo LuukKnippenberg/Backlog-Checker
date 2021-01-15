@@ -49,9 +49,16 @@ namespace Backlog_Checker.Controllers
         {
             if (gameId != null)
             {
-                Game game = gamesManager.GetSingleGame((int)gameId);
-
-                return View(game);
+                if (gamesManager.IfGameExists((int)gameId))
+                {
+                    Game game = gamesManager.GetSingleGame((int)gameId);
+                    return View(game);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
             else
             {
