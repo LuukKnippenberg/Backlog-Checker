@@ -28,8 +28,6 @@ namespace LogicLayer
 
         public List<Game> GetGamesFiltered(string filter, int userId)
         {
-            List<Game> filteredList;
-
             if(filter == "all")
             {
                 return ConvertModelDTOIntoGenericGameList(gamesDB.GetAllGames(userId));
@@ -61,7 +59,19 @@ namespace LogicLayer
 
         public bool ToggleUserGameRelation(int gameId, string subject, int userId)
         {
-           
+            Game game = new Game(gamesDB.GetSingleGameForUserById(gameId, userId));
+            try
+            {
+                game.ToggleUserGameRelation(subject, userId);
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
+            
+
+            /*
             var AllGames = gamesDB.GetAllGames(userId);
             List<Game> games = new List<Game>();
             foreach (GamesModelDTO gamesModel in AllGames)
@@ -81,8 +91,9 @@ namespace LogicLayer
                     
                 }
             }
+            */
 
-            return false;
+            
         }
 
         private List<Game> ConvertModelDTOIntoGenericGameList(List<GamesModelDTO> gamesModelDTO)

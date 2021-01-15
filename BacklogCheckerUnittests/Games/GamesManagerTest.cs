@@ -167,9 +167,30 @@ namespace BacklogCheckerUnittests.Games
         }
 
         [TestMethod]
-        public void ToggleUserGameRelation_ChangeCompletedStatus_True()
+        public void ToggleUserGameRelation_ChangeCompletedStatus_True() //Not Done
         {
             //Arrange
+            int gameId = 1;
+            string subject = "completed";
+            int userId = 1;
+
+            GamesManager gamesManager = new GamesManager("test");
+
+            //Act
+            bool result = gamesManager.ToggleUserGameRelation(gameId, subject, userId);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void DeleteGame_ChangeCompletedStatus_True() //Not done
+        {
+            //Arrange
+            string rights = "admin";
+            string subject = "completed";
+            int userId = 1;
+
             GamesManager gamesManager = new GamesManager("test");
             GamesModelDTO gameExpected = new GamesModelDTO
             {
@@ -179,7 +200,7 @@ namespace BacklogCheckerUnittests.Games
             };
 
             //Act
-            bool result = gamesManager.AddGame(gameExpected);
+            bool result = gamesManager.DeleteGame(rights, userId, userId);
 
             //Assert
             Assert.IsTrue(result);

@@ -59,19 +59,43 @@ namespace DataAccessLayer
                 new string[] { "@Id", gameId.ToString() }
             };
 
-            GamesModelDTO gamesModel = new GamesModelDTO();
-
             var query = "select * FROM games WHERE id = @Id";
 
             List<string> resultStringList = sqlConnection.ExecuteSearchQueryParameters(query, param);
 
-            gamesModel.Id = Convert.ToInt32(resultStringList[0]);
-            gamesModel.Title = resultStringList[1];
-            gamesModel.Description = resultStringList[2];
-            gamesModel.HeaderUrl = resultStringList[3];
-
-            return gamesModel;
+            return new GamesModelDTO
+            {
+                Id = Convert.ToInt32(resultStringList[0]),
+                Title = resultStringList[1],
+                Description = resultStringList[2],
+                HeaderUrl = resultStringList[3]
+            };
         }
+
+        public GamesModelDTO GetSingleGameForUserById(int gameId, int userId)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString() },
+                new string[] { "@UserId", userId.ToString() }
+            };
+
+            var query = "SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM games INNER JOIN users_games ON games.id = users_games.game_id AND users_games.user_id = @UserId AND games.id = @GameId";
+
+            List<string> resultStringList = sqlConnection.ExecuteSearchQueryParameters(query, param);
+
+            return new GamesModelDTO
+            {
+                Id = Convert.ToInt32(resultStringList[0]),
+                Title = resultStringList[1],
+                Description = resultStringList[2],
+                HeaderUrl = resultStringList[3],
+                Owned = Convert.ToBoolean(resultStringList[4]),
+                Completed = Convert.ToBoolean(resultStringList[5]),
+                Interested = Convert.ToBoolean(resultStringList[6]),
+            };
+        }
+
 
         public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
         {
