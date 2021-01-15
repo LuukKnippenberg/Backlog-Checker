@@ -89,12 +89,6 @@ namespace Backlog_Checker.Controllers
         }
 
         [HttpGet]
-        public IActionResult Compare()
-        {
-            return View();
-        }
-
-        [HttpGet]
         public IActionResult AddGame()
         {
             return View();
@@ -114,7 +108,7 @@ namespace Backlog_Checker.Controllers
                     HeaderUrl = model.HeaderUrl,
                 };
 
-                if (!gamesManager.IfNameAlreadyExists(DTO))
+                if (!gamesManager.IfNameAlreadyExists(DTO.Title))
                 {
                     gamesManager.AddGame(DTO);
                     return RedirectToAction("Index", "Games");

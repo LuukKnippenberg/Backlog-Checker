@@ -101,9 +101,9 @@ namespace LogicLayer
             return gamesDB.IfGameExists(gameId);
         }
 
-        public bool IfNameAlreadyExists(GamesModelDTO gamesModelDTO)
+        public bool IfNameAlreadyExists(string title)
         {
-            return gamesDB.IfNameAlreadyExists(gamesModelDTO);
+            return gamesDB.IfNameAlreadyExists(title);
         }
     }
 }

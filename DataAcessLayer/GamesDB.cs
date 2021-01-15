@@ -261,11 +261,11 @@ namespace DataAccessLayer
             }
         }
 
-        public bool IfNameAlreadyExists(GamesModelDTO gamesModelDTO)
+        public bool IfNameAlreadyExists(string title)
         {
             List<string[]> param = new List<string[]>()
             {
-                new string[] { "@Title", gamesModelDTO.Title.ToString()}
+                new string[] { "@Title", title}
             };
 
             var query = $"SELECT title FROM games WHERE title = @Title";

@@ -85,15 +85,16 @@ namespace BacklogCheckerUnittests.Games
         {
             //Arrange
             GamesManager gamesManager = new GamesManager("test");
-            List<Game> gamesList = new List<Game>();
-            Game game = new Game
+            List<Game> gamesList = new List<Game> 
             {
-                Id = 0,
-                Description = "This is the game",
-                Title = "Game title yeah",
-                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                new Game
+                {
+                    Id = 0,
+                    Title = "Game Title 0",
+                    Description = "This is the game",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                }
             };
-            gamesList.Add(game);
 
             string filter = "completed";
             int userId = 0;
@@ -102,8 +103,8 @@ namespace BacklogCheckerUnittests.Games
             var result = gamesManager.GetGamesFiltered(filter, userId);
 
             //Assert
-            Assert.AreEqual(result.Count, gamesList.Count);
             Assert.AreEqual(result[0].Id, gamesList[0].Id);
+            Assert.AreEqual(result[0].Title, gamesList[0].Title);
         }
 
         [TestMethod]
@@ -167,12 +168,12 @@ namespace BacklogCheckerUnittests.Games
         }
 
         [TestMethod]
-        public void ToggleUserGameRelation_ChangeCompletedStatus_True() //Not Done
+        public void ToggleUserGameRelation_ChangeCompletedStatus_True()
         {
             //Arrange
-            int gameId = 1;
+            int gameId = 0;
             string subject = "completed";
-            int userId = 1;
+            int userId = 0;
 
             GamesManager gamesManager = new GamesManager("test");
 
@@ -184,26 +185,75 @@ namespace BacklogCheckerUnittests.Games
         }
 
         [TestMethod]
-        public void DeleteGame_ChangeCompletedStatus_True() //Not done
+        public void DeleteGame_ChangeCompletedStatus_True()
         {
             //Arrange
             string rights = "admin";
-            string subject = "completed";
             int userId = 1;
 
             GamesManager gamesManager = new GamesManager("test");
-            GamesModelDTO gameExpected = new GamesModelDTO
-            {
-                Description = "This is the game",
-                Title = "Game title yeah",
-                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
-            };
 
             //Act
             bool result = gamesManager.DeleteGame(rights, userId, userId);
 
             //Assert
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IfGameExists_GameShouldExist_True()
+        {
+            //Arrange
+            int gameId = 1;
+            GamesManager gamesManager = new GamesManager("test");
+
+            //Act
+            bool result = gamesManager.IfGameExists(gameId);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IfGameExists_GameShouldExist_False()
+        {
+            //Arrange
+            int gameId = 0;
+            GamesManager gamesManager = new GamesManager("test");
+
+            //Act
+            bool result = gamesManager.IfGameExists(gameId);
+
+            //Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void IfNameAlreadyExists_NameShouldExist_True()
+        {
+            //Arrange
+            string title = "alreadyExists";
+            GamesManager gamesManager = new GamesManager("test");
+
+            //Act
+            bool result = gamesManager.IfNameAlreadyExists(title);
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IfNameAlreadyExists_NameShouldExist_False()
+        {
+            //Arrange
+            string title = "doesntExistYet";
+            GamesManager gamesManager = new GamesManager("test");
+
+            //Act
+            bool result = gamesManager.IfNameAlreadyExists(title);
+
+            //Assert
+            Assert.IsFalse(result);
         }
 
     }

@@ -74,143 +74,180 @@ namespace DataAccessLayerTest
 
         public List<GamesModelDTO> GetGamesForUserByIdWithFilter(int userId, string whereClause, string whereValue)
         {
-            List<GamesModelDTO> gamesModelList = new List<GamesModelDTO>();
-
-            if (userId == 0)
+            List<GamesModelDTO> gamesModelList = new List<GamesModelDTO>
             {
-                GamesModelDTO tempGamesModel = new GamesModelDTO
+                new GamesModelDTO
                 {
                     Id = 0,
-                    Description = "This is the game",
-                    Title = "Game title yeah",
+                    Title = "Game Title 0",
+                    Description = "This is a decent game",
                     HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
-                };
-                gamesModelList.Add(tempGamesModel);
-            }
+                },
+                new GamesModelDTO
+                {
+                    Id = 1,
+                    Title = "Game title 1",
+                    Description = "This is the game and its super cool.",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                },
+                new GamesModelDTO
+                {
+                    Id = 2,
+                    Title = "Game title 2",
+                    Description = "This is the game which is very nice.",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                }
+            };
 
             return gamesModelList;
 
         }
 
-        public GamesModelDTO GetSingleGame(int id)
+        public GamesModelDTO GetSingleGame(int gameId) //DBTest Done - Need to implement unit test
         {
-            List<GamesModelDTO> tempGamesModelList = new List<GamesModelDTO>();
-            GamesModelDTO gamesModelToReturn = new GamesModelDTO();
-            GamesModelDTO tempGamesModel = new GamesModelDTO
-            {
-                Description = "This is the game",
-                Title = "Game title yeah",
-                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
-            };
-            int amountOfGames = 10;
 
-            for (int i = 0; i < amountOfGames; i++)
+            List<GamesModelDTO> gamesModelList = new List<GamesModelDTO>
             {
-                tempGamesModel.Id = i;
-                tempGamesModelList.Add(tempGamesModel);
-            }
-
-            foreach (var item in tempGamesModelList)
-            {
-                if(id == item.Id)
+                new GamesModelDTO
                 {
-                    gamesModelToReturn = item;
-                }
-            }
-
-            return gamesModelToReturn;
-        }
-
-        public GamesModelDTO GetSingleGameForUserById(int gameId, int userId)
-        {
-            List<string[]> param = new List<string[]>()
-            {
-                new string[] { "@GameId", gameId.ToString() },
-                new string[] { "@UserId", userId.ToString() }
-            };
-
-            List<string> resultStringList = new List<string>
-            {
-                "test",
-                "test 2"
-            };
-
-            return new GamesModelDTO
-            {
-                Id = Convert.ToInt32(resultStringList[0]),
-                Title = resultStringList[1],
-                Description = resultStringList[2],
-                HeaderUrl = resultStringList[3],
-                Owned = Convert.ToBoolean(resultStringList[4]),
-                Completed = Convert.ToBoolean(resultStringList[5]),
-                Interested = Convert.ToBoolean(resultStringList[6]),
-            };
-        }
-
-        public GamesModelDTO GetSingleGame(int gameId, int userId) // NOT DONE
-        {
-            List<GamesModelDTO> tempGamesModelList = new List<GamesModelDTO>();
-            GamesModelDTO gamesModelToReturn = new GamesModelDTO();
-            GamesModelDTO tempGamesModel = new GamesModelDTO
-            {
-                Description = "This is the game",
-                Title = "Game title yeah",
-                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
-            };
-            int amountOfGames = 10;
-
-            for (int i = 0; i < amountOfGames; i++)
-            {
-                tempGamesModel.Id = i;
-                tempGamesModelList.Add(tempGamesModel);
-            }
-
-            foreach (var item in tempGamesModelList)
-            {
-                if (gameId == item.Id)
+                    Id = 0,
+                    Title = "Game Title 0",
+                    Description = "This is a decent game",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                },
+                new GamesModelDTO
                 {
-                    gamesModelToReturn = item;
+                    Id = 1,
+                    Title = "Game title 1",
+                    Description = "This is the game and its super cool.",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                },
+                new GamesModelDTO
+                {
+                    Id = 2,
+                    Title = "Game title 2",
+                    Description = "This is the game which is very nice.",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
                 }
+            };
+
+            switch (gameId)
+            {
+                case 0:
+                    return gamesModelList[0];
+                case 1:
+                    return gamesModelList[1];
+                case 2:
+                    return gamesModelList[2];
+                default:
+                    return new GamesModelDTO();
+            }            
+        }
+
+        public GamesModelDTO GetSingleGameForUserById(int gameId, int userId) //DBTest Done - Need to implement unit test
+        {
+            List<GamesModelDTO> gamesModelList = new List<GamesModelDTO>
+            {
+                new GamesModelDTO
+                {
+                    Id = 0,
+                    Title = "Game Title 0",
+                    Description = "This is a decent game",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096",
+                    Owned = false,
+                    Completed = false,
+                    Interested = false
+                },
+                new GamesModelDTO
+                {
+                    Id = 1,
+                    Title = "Game title 1",
+                    Description = "This is the game and its super cool.",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096",
+                    Owned = false,
+                    Completed = false,
+                    Interested = false
+                }
+            };
+
+            if(gameId == 0 && userId == 0)
+            {
+                return gamesModelList[0];
             }
-
-            return gamesModelToReturn;
-        }
-
-        public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId) // NOT DONE
-        {
-            return true;
-        }
-
-        public bool IfGameExists(int gameId) // NOT DONE
-        {
-            List<string[]> param = new List<string[]>()
+            else if (gameId == 1 && userId == 0)
             {
-                new string[] { "@GameId", gameId.ToString()}
+                return gamesModelList[1];
+            }
+            else
+            {
+                return new GamesModelDTO();
+            }
+        }
+
+        public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId) // DBTest Done - Need to implement unit test
+        {
+            GamesModelDTO gamesModelDTO = new GamesModelDTO
+            {
+                Id = 1,
+                Title = "The title",
+                Description = "The description",
+                HeaderUrl = "www.link.com",
+                Owned = false,
+                Completed = false,
+                Interested = false
             };
 
-            var query = $"SELECT * FROM games WHERE id = @GameId";
-
-            return false;
-        }
-
-        public bool IfNameAlreadyExists(GamesModelDTO gamesModelDTO) // NOT DONE
-        {
-            List<string[]> param = new List<string[]>()
+            if(gameId == 0 && userId == 0)
             {
-                new string[] { "@Title", gamesModelDTO.Title.ToString()}
-            };
+                if(updateWith == true)
+                {
+                    switch (fieldToUpdate)
+                    {
+                        case "owned":
+                            if (gamesModelDTO.Owned)
+                                return true;
+                            return false;
 
-            var query = $"SELECT title FROM games WHERE title = @Title";
-            var result = "test";
+                        case "completed":
+                            if (gamesModelDTO.Completed)
+                                return true;
+                            return false;
+                        case "interested":
+                            if (gamesModelDTO.Interested)
+                                return true;
+                            return false;
+                        default:
+                            return false;
+                    }
+                }
 
-            if (result == "tester")
-            {
                 return false;
             }
             else
             {
+                return false;
+            }
+        }
+
+        public bool IfGameExists(int gameId) // DBTest Done - Need to implement unit test
+        {
+            if(gameId == 1 || gameId == 2)
+            {
                 return true;
             }
+
+            return false;
+        }
+
+        public bool IfNameAlreadyExists(string title) // DBTest Done - Need to implement unit test
+        {
+            
+            if(title == "alreadyExists")
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
