@@ -261,5 +261,25 @@ namespace DataAccessLayer
             }
         }
 
+        public bool IfNameAlreadyExists(GamesModelDTO gamesModelDTO)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@Title", gamesModelDTO.Title.ToString()}
+            };
+
+            var query = $"SELECT title FROM games WHERE title = @Title";
+            var result = sqlConnection.ExecuteSearchQueryParameters(query, param);
+
+            if (result.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
     }
 }

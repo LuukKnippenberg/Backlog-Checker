@@ -68,32 +68,7 @@ namespace LogicLayer
             catch 
             {
                 return false;
-            }
-            
-
-            /*
-            var AllGames = gamesDB.GetAllGames(userId);
-            List<Game> games = new List<Game>();
-            foreach (GamesModelDTO gamesModel in AllGames)
-            {
-                var game = new Game(gamesModel);
-                games.Add(game);
-            }
-            
-            foreach (var game in games)
-            {
-                if(game.Id == gameId)
-                {
-                    if(game.ToggleUserGameRelation(subject, userId))
-                    {
-                        return true;
-                    }
-                    
-                }
-            }
-            */
-
-            
+            }            
         }
 
         private List<Game> ConvertModelDTOIntoGenericGameList(List<GamesModelDTO> gamesModelDTO)
@@ -124,6 +99,11 @@ namespace LogicLayer
         public bool IfGameExists(int gameId)
         {
             return gamesDB.IfGameExists(gameId);
+        }
+
+        public bool IfNameAlreadyExists(GamesModelDTO gamesModelDTO)
+        {
+            return gamesDB.IfNameAlreadyExists(gamesModelDTO);
         }
     }
 }

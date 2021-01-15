@@ -147,7 +147,7 @@ namespace DataAccessLayerTest
             };
         }
 
-        public GamesModelDTO GetSingleGame(int gameId, int userId)
+        public GamesModelDTO GetSingleGame(int gameId, int userId) // NOT DONE
         {
             List<GamesModelDTO> tempGamesModelList = new List<GamesModelDTO>();
             GamesModelDTO gamesModelToReturn = new GamesModelDTO();
@@ -176,12 +176,12 @@ namespace DataAccessLayerTest
             return gamesModelToReturn;
         }
 
-        public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
+        public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId) // NOT DONE
         {
             return true;
         }
 
-        public bool IfGameExists(int gameId)
+        public bool IfGameExists(int gameId) // NOT DONE
         {
             List<string[]> param = new List<string[]>()
             {
@@ -191,6 +191,26 @@ namespace DataAccessLayerTest
             var query = $"SELECT * FROM games WHERE id = @GameId";
 
             return false;
+        }
+
+        public bool IfNameAlreadyExists(GamesModelDTO gamesModelDTO) // NOT DONE
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@Title", gamesModelDTO.Title.ToString()}
+            };
+
+            var query = $"SELECT title FROM games WHERE title = @Title";
+            var result = "test";
+
+            if (result == "tester")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

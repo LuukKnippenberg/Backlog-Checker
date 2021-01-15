@@ -16,5 +16,6 @@ namespace Interfaces.Game
         bool DeleteGame(int gameId);
         bool DeleteGameUserLink(int gameId, int userId);
         bool IfGameExists(int gameId);
+        bool IfNameAlreadyExists(GamesModelDTO gamesModelDTO);
     }
 }

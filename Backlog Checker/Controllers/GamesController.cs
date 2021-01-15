@@ -113,14 +113,15 @@ namespace Backlog_Checker.Controllers
                     Description = model.Description,
                     HeaderUrl = model.HeaderUrl,
                 };
-                try
+
+                if (!gamesManager.IfNameAlreadyExists(DTO))
                 {
                     gamesManager.AddGame(DTO);
                     return RedirectToAction("Index", "Games");
                 }
-                catch
+                else
                 {
-                    throw new Exception("Failed to add game");
+                    return RedirectToAction("AddGame", "Games");
                 }
             }
             else
