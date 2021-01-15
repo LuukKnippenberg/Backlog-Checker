@@ -9,26 +9,21 @@ namespace BacklogCheckerUnittests
     [TestClass]
     public class GameTest
     {
-        /*
-        [TestMethod]
-        [ExpectedException(typeof(AssertFailedException),
-            "Expected amount of wagons does not equal the actual amount of wagons!")]
-        */
-
         [TestMethod]
         public void GetGamesFiltered_FilterAllGames_AreNotEqual()
         {
             //Arrange
             GamesManager gamesManager = new GamesManager("test");
-            List<Game> gamesList = new List<Game>();
-            Game game = new Game
+            List<Game> gamesList = new List<Game> 
             {
-                Id = 0,
-                Description = "This is the game",
-                Title = "Game title yeah",
-                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                new Game
+                {
+                    Id = 0,
+                    Description = "This is the game",
+                    Title = "Game title yeah",
+                    HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+                }
             };
-            gamesList.Add(game);
 
             string filter = "all";
             int userId = 1;
@@ -39,6 +34,25 @@ namespace BacklogCheckerUnittests
             //Assert
             Assert.AreNotEqual(result, gamesList);
         }
-           
+
+        [TestMethod]
+        public void UpdateGame_SuccessfullyUpdateGame_True()
+        {
+            //Arrange
+            Game game = new Game("test")
+            {
+                Id = 0,
+                Description = "This is the game",
+                Title = "Game title yeah",
+                HeaderUrl = "https://pbs.twimg.com/media/ELNuLFMXYAA25hT?format=jpg&name=4096x4096"
+            };
+            game.Title = "The New Title";
+
+            //Act
+            var result = game.UpdateGame();
+
+            //Assert
+            Assert.IsTrue(result);
+        }
     }
 }

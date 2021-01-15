@@ -46,6 +46,11 @@ namespace LogicLayer
 
         }
 
+        public Game(string datasource)
+        {
+            gamesDB = GamesFactory.GetGamesDB(datasource.ToLower());
+        }
+
         public bool UpdateGame()
         {
             return gamesDB.EditGame(CreateDTO());
