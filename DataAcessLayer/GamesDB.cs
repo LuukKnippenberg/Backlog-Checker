@@ -132,7 +132,7 @@ namespace DataAccessLayer
             return sqlConnection.ExecuteNonSearchQueryParameters(query, param);  
         }
 
-        public bool  DeleteGame(int gameId)
+        public bool DeleteGame(int gameId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -191,19 +191,6 @@ namespace DataAccessLayer
             }
 
             return gamesList;
-        }
-
-        private bool ConvertStringBoolIntoNumericalBool(string boolString)
-        {
-            if (boolString == "" || boolString is null)
-            {
-                return false;
-            }
-            else
-            {
-                return Convert.ToBoolean(Convert.ToInt32(boolString));
-            }
-
         }
 
         private bool IfRelationExistsBetweenGameAndUser(int userId, int gameId)

@@ -168,7 +168,7 @@ namespace BacklogCheckerUnittests.Games
         }
 
         [TestMethod]
-        public void ToggleUserGameRelation_ChangeCompletedStatus_True()
+        public void ToggleUserGameRelation_ChangeCompletedStatus_False()
         {
             //Arrange
             int gameId = 0;
@@ -181,7 +181,7 @@ namespace BacklogCheckerUnittests.Games
             bool result = gamesManager.ToggleUserGameRelation(gameId, subject, userId);
 
             //Assert
-            Assert.IsTrue(result);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]

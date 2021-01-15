@@ -71,18 +71,6 @@ namespace LogicLayer
             }            
         }
 
-        private List<Game> ConvertModelDTOIntoGenericGameList(List<GamesModelDTO> gamesModelDTO)
-        {
-            List<Game> gamesTemp = new List<Game>();
-
-            foreach (GamesModelDTO gamesModel in gamesModelDTO)
-            {
-                var game = new Game(gamesModel);
-                gamesTemp.Add(game);
-            }
-            return gamesTemp;
-        }
-
         public bool DeleteGame(string rights, int userId, int gameId)
         {
             if (rights == "admin")
@@ -104,6 +92,17 @@ namespace LogicLayer
         public bool IfNameAlreadyExists(string title)
         {
             return gamesDB.IfNameAlreadyExists(title);
+        }
+        private List<Game> ConvertModelDTOIntoGenericGameList(List<GamesModelDTO> gamesModelDTO)
+        {
+            List<Game> gamesTemp = new List<Game>();
+
+            foreach (GamesModelDTO gamesModel in gamesModelDTO)
+            {
+                var game = new Game(gamesModel);
+                gamesTemp.Add(game);
+            }
+            return gamesTemp;
         }
     }
 }
