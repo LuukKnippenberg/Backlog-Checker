@@ -52,26 +52,50 @@ namespace DataAccessLayer
             return ConvertQueryResultsIntoRows(gamesByUserId);
         }
 
-        public GamesModelDTO GetSingleGame(int id)
+        public GamesModelDTO GetSingleGame(int gameId)
         {
             List<string[]> param = new List<string[]>()
             {
-                new string[] { "@Id", id.ToString() }
+                new string[] { "@Id", gameId.ToString() }
             };
-
-            GamesModelDTO gamesModel = new GamesModelDTO();
 
             var query = "select * FROM games WHERE id = @Id";
 
             List<string> resultStringList = sqlConnection.ExecuteSearchQueryParameters(query, param);
 
-            gamesModel.Id = Convert.ToInt32(resultStringList[0]);
-            gamesModel.Title = resultStringList[1];
-            gamesModel.Description = resultStringList[2];
-            gamesModel.HeaderUrl = resultStringList[3];
-
-            return gamesModel;
+            return new GamesModelDTO
+            {
+                Id = Convert.ToInt32(resultStringList[0]),
+                Title = resultStringList[1],
+                Description = resultStringList[2],
+                HeaderUrl = resultStringList[3]
+            };
         }
+
+        public GamesModelDTO GetSingleGameForUserById(int gameId, int userId)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString() },
+                new string[] { "@UserId", userId.ToString() }
+            };
+
+            var query = "SELECT games.*, users_games.owned, users_games.completed, users_games.interested FROM games INNER JOIN users_games ON games.id = users_games.game_id AND users_games.user_id = @UserId AND games.id = @GameId";
+
+            List<string> resultStringList = sqlConnection.ExecuteSearchQueryParameters(query, param);
+
+            return new GamesModelDTO
+            {
+                Id = Convert.ToInt32(resultStringList[0]),
+                Title = resultStringList[1],
+                Description = resultStringList[2],
+                HeaderUrl = resultStringList[3],
+                Owned = Convert.ToBoolean(resultStringList[4]),
+                Completed = Convert.ToBoolean(resultStringList[5]),
+                Interested = Convert.ToBoolean(resultStringList[6]),
+            };
+        }
+
 
         public bool ToggleUserGameRelation(int gameId, bool updateWith, string fieldToUpdate, int userId)
         {
@@ -108,7 +132,7 @@ namespace DataAccessLayer
             return sqlConnection.ExecuteNonSearchQueryParameters(query, param);  
         }
 
-        public bool  DeleteGame(int gameId)
+        public bool DeleteGame(int gameId)
         {
             List<string[]> param = new List<string[]>()
             {
@@ -169,19 +193,6 @@ namespace DataAccessLayer
             return gamesList;
         }
 
-        private bool ConvertStringBoolIntoNumericalBool(string boolString)
-        {
-            if (boolString == "" || boolString is null)
-            {
-                return false;
-            }
-            else
-            {
-                return Convert.ToBoolean(Convert.ToInt32(boolString));
-            }
-
-        }
-
         private bool IfRelationExistsBetweenGameAndUser(int userId, int gameId)
         {
             List<string[]> param = new List<string[]>()
@@ -215,6 +226,46 @@ namespace DataAccessLayer
             var query = $"INSERT INTO users_games(game_id, user_id, interested, completed, owned) VALUES (@GameId, @UserId, '', '', '')";
 
             return sqlConnection.ExecuteNonSearchQueryParameters(query, param);
+        }
+
+        public bool IfGameExists(int gameId)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@GameId", gameId.ToString()}
+            };
+
+            var query = $"SELECT * FROM games WHERE id = @GameId";
+            var result = sqlConnection.ExecuteSearchQueryParameters(query, param);
+
+            if(result.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool IfNameAlreadyExists(string title)
+        {
+            List<string[]> param = new List<string[]>()
+            {
+                new string[] { "@Title", title}
+            };
+
+            var query = $"SELECT title FROM games WHERE title = @Title";
+            var result = sqlConnection.ExecuteSearchQueryParameters(query, param);
+
+            if (result.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
     }

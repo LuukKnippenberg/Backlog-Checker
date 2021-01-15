@@ -5,7 +5,7 @@ using System.Text;
 using DataAccessLayer;
 using DataAccessLayerTest;
 
-namespace LogicLayer
+namespace FactoryLayer
 {
     public static class GamesFactory
     {
@@ -18,7 +18,7 @@ namespace LogicLayer
                 case "test":
                     return new GamesDBTest();
                 default:
-                    throw new NotImplementedException();
+                    return new GamesDB();
             }
         }
 
@@ -31,7 +31,7 @@ namespace LogicLayer
                 case "test":
                     return new GamesDBTest();
                 default:
-                    throw new NotImplementedException();
+                    return new GamesDB();
             }
         }
     }

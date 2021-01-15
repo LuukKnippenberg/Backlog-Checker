@@ -3,7 +3,7 @@ using System;
 using DataAccessLayer;
 using DataAccessLayerTest;
 
-namespace LogicLayer
+namespace FactoryLayer
 {
     public static class AccountFactory
     {

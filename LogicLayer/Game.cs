@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Interfaces.Game;
+using FactoryLayer;
 
 namespace LogicLayer
 {
@@ -45,17 +46,9 @@ namespace LogicLayer
 
         }
 
-        public bool DeleteGame(string rights, int userId)
+        public Game(string datasource)
         {
-            if (rights == "admin")
-            {
-                return gamesDB.DeleteGame(Id);
-            }
-            else
-            {
-                return gamesDB.DeleteGameUserLink(Id, userId);
-            }
-
+            gamesDB = GamesFactory.GetGamesDB(datasource.ToLower());
         }
 
         public bool UpdateGame()

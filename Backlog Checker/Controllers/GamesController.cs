@@ -47,32 +47,45 @@ namespace Backlog_Checker.Controllers
         [HttpGet]
         public IActionResult Game(int? gameId)
         {
-            if (gameId != null)
-            {
-                Game game = gamesManager.GetSingleGame((int)gameId);
+            int? userId = HttpContext.Session.GetInt32("userId");
 
-                return View(game);
+            if (userId != null) 
+            {
+                if (gameId != null)
+                {
+                    if (gamesManager.IfGameExists((int)gameId))
+                    {
+                        Game game = gamesManager.GetSingleGame((int)gameId);
+                        return View(game);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             else
             {
-                return RedirectToAction("Index");
-            }
-                
+                return RedirectToAction("Login", "Account");
+            }                
         }
 
         public void DeleteGame(int gameId)
         {
-            Game game = gamesManager.GetSingleGame(gameId);
-            string rights = HttpContext.Session.GetString("rights");
             int? userId = HttpContext.Session.GetInt32("userId");
 
-            game.DeleteGame(rights, Convert.ToInt32(userId));
-        }
+            if (userId != null)
+            {
+                string rights = HttpContext.Session.GetString("rights");
 
-        [HttpGet]
-        public IActionResult Compare()
-        {
-            return View();
+                gamesManager.DeleteGame(rights, Convert.ToInt32(userId), gameId);
+            }
+               
         }
 
         [HttpGet]
@@ -84,48 +97,66 @@ namespace Backlog_Checker.Controllers
         [HttpPost]
         public IActionResult AddGame(MyGamesViewModel model)
         {
-            GamesModelDTO DTO = new GamesModelDTO()
+            int? userId = HttpContext.Session.GetInt32("userId");
+
+            if (userId != null)
             {
-                Title = model.title,
-                Description = model.Description,
-                HeaderUrl = model.HeaderUrl,
-            };
-            try
-            {
-                gamesManager.AddGame(DTO);
-                return RedirectToAction("Index", "Games");
+                GamesModelDTO DTO = new GamesModelDTO()
+                {
+                    Title = model.title,
+                    Description = model.Description,
+                    HeaderUrl = model.HeaderUrl,
+                };
+
+                if (!gamesManager.IfNameAlreadyExists(DTO.Title))
+                {
+                    gamesManager.AddGame(DTO);
+                    return RedirectToAction("Index", "Games");
+                }
+                else
+                {
+                    return RedirectToAction("AddGame", "Games");
+                }
             }
-            catch
+            else
             {
-                throw new Exception("Failed to add game");
+                return RedirectToAction("Login", "Account");
             }
+
         }
 
         [HttpGet]
         public IActionResult Edit(int? gameId)
         {
             Game game;
+            int? userId = HttpContext.Session.GetInt32("userId");
 
-            if(gameId != null)
+            if (userId != null)
             {
-                string rights = HttpContext.Session.GetString("rights");
-                int? userId = HttpContext.Session.GetInt32("userId");
-
-                if (rights != "admin")
+                if (gameId != null)
                 {
+                    string rights = HttpContext.Session.GetString("rights");
 
-                    return RedirectToAction("Game", new { gameId = gameId });
+
+                    if (rights != "admin")
+                    {
+
+                        return RedirectToAction("Game", new { gameId = gameId });
+                    }
+
+                    game = gamesManager.GetSingleGame((int)gameId);
+
+                    return View(game);
                 }
-
-                game = gamesManager.GetSingleGame((int)gameId);
-
-                return View(game);
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             else
             {
-                return RedirectToAction("Index");
-            }
-            
+                return RedirectToAction("Login", "Account");
+            }           
         }
 
         [HttpPost]
@@ -133,15 +164,22 @@ namespace Backlog_Checker.Controllers
         {
             int? userId = HttpContext.Session.GetInt32("userId");
 
-            game.UpdateGame();
+            if (userId != null)
+            {
+                game.UpdateGame();
 
-            return RedirectToAction("Game", new { gameId = game.Id });
+                return RedirectToAction("Game", new { gameId = game.Id });
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         public void ToggleOwned(int gameId, string subject)
         {
+
             int? userId = HttpContext.Session.GetInt32("userId");
-            
 
             gamesManager.ToggleUserGameRelation(gameId, subject, Convert.ToInt32(userId));
         }
