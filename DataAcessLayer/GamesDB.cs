@@ -74,6 +74,11 @@ namespace DataAccessLayer
 
         public GamesModelDTO GetSingleGameForUserById(int gameId, int userId)
         {
+            if (!IfRelationExistsBetweenGameAndUser(userId, gameId))
+            {
+                CreateRelationBetweenGameAndUser(userId, gameId);
+            }
+
             List<string[]> param = new List<string[]>()
             {
                 new string[] { "@GameId", gameId.ToString() },

@@ -37,7 +37,7 @@ namespace Backlog_Checker.Controllers
                 Account CurrentAccount = accountsManager.ReturnLoggedInUserData();
                 HttpContext.Session.SetInt32("userId", CurrentAccount.Id);
                 HttpContext.Session.SetString("username", CurrentAccount.Username);
-                HttpContext.Session.SetString("rights", CurrentAccount.Rights);
+                HttpContext.Session.SetInt32("rights", (int)CurrentAccount.Rights);
                 return RedirectToAction("Index", "Home");
             }
             else

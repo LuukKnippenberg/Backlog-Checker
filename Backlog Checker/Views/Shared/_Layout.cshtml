@@ -56,13 +56,6 @@
                     if (nameOK)
                     {
                         string result = System.Text.Encoding.UTF8.GetString(sessionName);
-                        <!--
-                        <a asp-area="" asp-controller="Account" asp-action="Profile">
-                            <div class="icon">
-                                <img />
-                            </div>
-                        </a>
-                        -->
                         <a asp-area="" asp-controller="Account" asp-action="Profile">@result</a>
                         <a class="danger logout" asp-area="" asp-controller="Account" asp-action="LogOut">Log Out</a>
                     }

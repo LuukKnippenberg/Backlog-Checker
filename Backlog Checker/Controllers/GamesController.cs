@@ -135,12 +135,10 @@ namespace Backlog_Checker.Controllers
             {
                 if (gameId != null)
                 {
-                    string rights = HttpContext.Session.GetString("rights");
+                    int? rights = HttpContext.Session.GetInt32("rights");
 
-
-                    if (rights != "admin")
+                    if (rights != 0) //If not an admin
                     {
-
                         return RedirectToAction("Game", new { gameId = gameId });
                     }
 

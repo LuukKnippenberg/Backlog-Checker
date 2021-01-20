@@ -16,5 +16,5 @@ namespace ModelsDTO
         public string HeaderUrl { get; set; }
         public string Rights { get; set; }
 
-    }
+}
 }
