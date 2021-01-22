@@ -81,9 +81,23 @@ namespace Backlog_Checker.Controllers
 
             if (userId != null)
             {
-                string rights = HttpContext.Session.GetString("rights");
+                int? rights = HttpContext.Session.GetInt32("rights");
+                string userRights;
 
-                gamesManager.DeleteGame(rights, Convert.ToInt32(userId), gameId);
+                switch (rights)
+                {
+                    case 0:
+                        userRights = "admin";
+                        break;
+                    case 1:
+                        userRights = "user";
+                        break;
+                    default:
+                        userRights = "user";
+                        break;
+                }
+
+                gamesManager.DeleteGame(userRights, Convert.ToInt32(userId), gameId);
             }
                
         }
@@ -98,9 +112,11 @@ namespace Backlog_Checker.Controllers
         public IActionResult AddGame(MyGamesViewModel model)
         {
             int? userId = HttpContext.Session.GetInt32("userId");
+            int? rights = HttpContext.Session.GetInt32("rights");
 
             if (userId != null)
             {
+                
                 GamesModelDTO DTO = new GamesModelDTO()
                 {
                     Title = model.title,

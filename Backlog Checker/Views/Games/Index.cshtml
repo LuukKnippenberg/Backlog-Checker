@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "My Games";
 }
+@using Microsoft.AspNetCore.Http;
 
 <h1>My Games</h1>
 
@@ -20,7 +21,20 @@
             </div>
             <a class="option button nav-link" asp-area="" asp-controller="Games" asp-action="Index">Reset Filter</a>
             <!--<button href="#" class="option button" id="sort">Sort</button>-->
-            <a class="option button nav-link" asp-area="" asp-controller="Games" asp-action="AddGame">Add</a>
+            @{
+                int? rightsInt = Context.Session.GetInt32("rights");
+
+                if (rightsInt != null)
+                {
+                    if (rightsInt == 0) // If admin
+                    {
+
+                        <a class="option button nav-link" asp-area="" asp-controller="Games" asp-action="AddGame">Add</a>
+
+                    }
+                }
+            }
+
         </div>
         <div id="games-list">
             <div class="items">
@@ -33,9 +47,9 @@
                         <div class="row" gameId="@item.Id">
                             <div class="col title">@item.Title</div>
                             <div class="col">
-                                <label class="interestedLabel"><input type="checkbox" @{if (item.Interested == true) { @checkedString }} onchange="ChangeUserToGameRelation(@item.Id, 'interested')">Interested</label>
-                                <label class="completed"><input type="checkbox" @{if (item.Completed == true) { @checkedString }} onchange="ChangeUserToGameRelation(@item.Id, 'completed')">>Completed</label>
-                                <label class="owned"><input type="checkbox" @{if (item.Owned == true) { @checkedString }} onchange="ChangeUserToGameRelation(@item.Id, 'owned')">>Owned</label>
+                                <label class="interestedLabel"><input type="checkbox" @{if (item.Interested == true) { @checkedString  }} onchange="ChangeUserToGameRelation(@item.Id, 'interested')">Interested</label>
+                                <label class="completed"><input type="checkbox" @{if (item.Completed == true) { @checkedString  }} onchange="ChangeUserToGameRelation(@item.Id, 'completed')">>Completed</label>
+                                <label class="owned"><input type="checkbox" @{if (item.Owned == true) { @checkedString  }} onchange="ChangeUserToGameRelation(@item.Id, 'owned')">>Owned</label>
                             </div>
                             <div class="col">
                                 <a asp-controller="Games" asp-action="Game" asp-route-gameId="@item.Id"><i class="fas fa-chevron-right"></i></a>
